@@ -3,9 +3,11 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 import SignIn from "~/layouts/default/modals/SignIn.vue";
 import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
 
+const route = useRoute();
+const { t } = useI18n();
 const navigation = [
-  { name: "nav.pricing", href: "pricing" },
-  { name: "nav.docs", href: "docs" },
+  { name: "pricing", href: "pricing" },
+  { name: "docs", href: "docs" },
 ];
 const mobileMenuOpen = ref(false);
 const { status: authStatus } = useAuth();
@@ -42,7 +44,7 @@ const authStore = useAuthStore();
           :to="item.href"
           class="text-sm font-semibold leading-6"
           :class="[
-            $route.name === item.href ? 'text-indigo-600' : 'text-gray-900',
+            route.name === item.href ? 'text-indigo-600' : 'text-gray-900',
           ]"
           >{{ item.name }}</NuxtLink
         >
@@ -54,7 +56,7 @@ const authStore = useAuthStore();
             to="/dashboard"
             class="text-sm font-semibold leading-6 text-gray-900"
           >
-            {{ $t('nav.dashboard') }}
+            {{ t('nav.dashboard') }}
           </NuxtLink>
         </template>
         <template v-else>
@@ -62,7 +64,7 @@ const authStore = useAuthStore();
             color="gray"
             variant="ghost"
             @click="authStore.toggleSignInModal()"
-            :label="$t('nav.signin')"
+            :label="t('nav.signin')"
           />
         </template>
       </div>
@@ -100,7 +102,7 @@ const authStore = useAuthStore();
                 :to="item.href"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50"
                 :class="[
-                  $route.name === item.href
+                  route.name === item.href
                     ? 'text-indigo-600'
                     : 'text-gray-900',
                 ]"

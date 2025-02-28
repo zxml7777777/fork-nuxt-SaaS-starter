@@ -59,6 +59,17 @@ export default defineNuxtConfig({
     StripeSecretKey: "",
     StripeWebhookSecret: "",
     ResendApiKey: "",
+    // Stripe Price IDs
+    StripePrices: {
+      pro: {
+        monthly: process.env.NUXT_STRIPE_PRO_PRICE_MONTHLY,
+        yearly: process.env.NUXT_STRIPE_PRO_PRICE_YEARLY,
+      },
+      business: {
+        monthly: process.env.NUXT_STRIPE_BUSINESS_PRICE_MONTHLY,
+        yearly: process.env.NUXT_STRIPE_BUSINESS_PRICE_YEARLY,
+      }
+    },
     public: {
       SiteUrl: "",
     },

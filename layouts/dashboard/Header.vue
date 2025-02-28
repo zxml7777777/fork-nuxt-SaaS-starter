@@ -2,8 +2,8 @@
 import { useAuth } from '#imports';
 const { data, signOut } = useAuth();
 const navigation = [
-  { name: "dashboard.navigation.panel", href: "/dashboard" },
-  { name: "dashboard.navigation.documentation", href: "/docs" },
+  { name: "panel", href: "/dashboard" },
+  { name: "documentation", href: "/docs" },
 ];
 const mobileMenuOpen = ref(false);
 </script>

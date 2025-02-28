@@ -75,8 +75,8 @@ export default defineAppConfig({
           yearly: 144,
         },
         stripeIds: {
-          monthly: "price_1PU9E9LAtQLLkA4NvFq3CjKh",
-          yearly: "price_1PU9ELLAtQLLkA4NKB10WtN8",
+          monthly: "",
+          yearly: "",
         },
       },
       {
@@ -94,8 +94,8 @@ export default defineAppConfig({
           yearly: 300,
         },
         stripeIds: {
-          monthly: "price_1PU9EwLAtQLLkA4NlfujMvYV",
-          yearly: "price_1PU9FFLAtQLLkA4NpZDeEKUL",
+          monthly: "",
+          yearly: "",
         },
       },
     ],
@@ -104,7 +104,7 @@ export default defineAppConfig({
     title: "Pricing",
     subtitle: "Pricing plans for teams of all sizes",
     description:
-      "Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer loyalty, and driving sales.",
+      "Choose an affordable plan that's packed with the best features for engaging your audience, creating customer loyalty, and driving sales.",
   },
   CTA: {
     title: "Ready to get started?",
