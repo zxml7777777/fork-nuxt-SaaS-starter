@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
+    "build": "cross-env NODE_NO_WARNINGS=1 nuxt build",
+    "dev": "cross-env NODE_NO_WARNINGS=1 nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && prisma generate && prisma migrate deploy",
@@ -17,6 +17,7 @@
     "@nuxt/eslint": "^0.3.13",
     "@nuxt/image": "^1.7.0",
     "@sidebase/nuxt-auth": "^0.8.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.6.0",
     "nuxt-headlessui": "^1.2.0",
     "nuxt-og-image": "3.0.0-rc.60",
