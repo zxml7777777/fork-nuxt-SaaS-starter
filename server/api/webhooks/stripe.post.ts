@@ -1,9 +1,10 @@
 //Handle stripe webhook events
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import Stripe from "stripe";
 import { prisma } from "~/lib/prisma";
 
 export default defineEventHandler(async (event) => {
+  const stripe = getStripe();
   const runtimeConfig = useRuntimeConfig();
 
   const sig = getHeader(event, "stripe-signature");

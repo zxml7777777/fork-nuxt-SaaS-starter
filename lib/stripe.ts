@@ -1,13 +1,24 @@
 import Stripe from "stripe";
 
-const config = useRuntimeConfig();
+// 不要在顶层调用 useRuntimeConfig
+let stripe: Stripe | null = null;
 
-export const stripe = new Stripe(config.stripeSecretKey, {
-  apiVersion: "2024-04-10",
-  typescript: true,
-});
+// 创建一个获取 stripe 实例的函数
+export function getStripe() {
+  if (!stripe) {
+    const config = useRuntimeConfig();
+    stripe = new Stripe(config.stripeSecretKey, {
+      apiVersion: "2023-10-16",
+      typescript: true,
+    });
+  }
+  return stripe;
+}
 
 export async function createCustomerPortalSession(customerId: string) {
+  const config = useRuntimeConfig();
+  const stripe = getStripe();
+  
   const session = await stripe.billingPortal.sessions.create({
     customer: customerId,
     return_url: `${config.public.siteUrl}/dashboard/billing`,

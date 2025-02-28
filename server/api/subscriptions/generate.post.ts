@@ -1,9 +1,10 @@
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import { absoluteUrl } from "~/utils/url";
 import { getServerSession } from "#auth";
 import type { Session } from "next-auth";
 // Route is auto protected by the `auth` middleware (server/middleware/auth.ts) and Session is guaranteed to be present
 export default defineEventHandler(async (event) => {
+  const stripe = getStripe();
   const session = (await getServerSession(event)) as Session;
   if (!session.user || !session.user.email) {
     return {

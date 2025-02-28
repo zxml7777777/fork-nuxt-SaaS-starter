@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ParsedContent } from "@nuxt/content";
 import { splitByCase, upperFirst } from "scule";
+import NavigationItem from '~/components/docs/NavigationItem.vue';
 
 const route = useRoute();
 const { seo } = useAppConfig();
@@ -17,11 +18,12 @@ if (!page.value) {
 if (page.value.redirect && page.value.redirect !== route.path)
   navigateTo(page.value.redirect);
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
+const { data: surround } = await useAsyncData<Pick<ParsedContent, string>[]>(`${route.path}-surround`, () =>
   queryContent()
     .where({ _extension: "md", navigation: { $ne: false } })
     .only(["title", "description", "_path"])
     .findSurround(withoutTrailingSlash(route.path))
+    .then(data => data ?? [])
 );
 
 const headline = computed(() => findPageHeadline(page.value as ParsedContent));

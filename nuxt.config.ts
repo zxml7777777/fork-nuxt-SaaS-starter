@@ -65,10 +65,11 @@ export default defineNuxtConfig({
     AuthSecret: "",
     GoogleClientId: "",
     GoogleClientSecret: "",
+    ResendApiKey: "",
+    
+    // Stripe 配置
     stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
-    ResendApiKey: "",
-    // Stripe Price IDs
     StripePrices: {
       pro: {
         monthly: process.env.NUXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,
@@ -79,6 +80,7 @@ export default defineNuxtConfig({
         yearly: process.env.NUXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PRICE_ID
       }
     },
+
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
       StripePrices: {
@@ -90,8 +92,9 @@ export default defineNuxtConfig({
           monthly: process.env.NUXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PRICE_ID,
           yearly: process.env.NUXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PRICE_ID
         }
-      }
-    },
+      },
+      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    }
   },
 
   compatibilityDate: "2024-07-06",
