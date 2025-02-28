@@ -37,12 +37,6 @@ const logInWith = async (provider: string) => {
         </div>
         <div class="mt-3 text-center sm:mt-5">
           <h3 class="text-xl font-semibold leading-6 text-gray-900">Sign in</h3>
-          <div class="mt-2">
-            <p class="text-sm text-gray-500">
-              This is strictly for demo purposes - only your email and profile
-              picture will be stored.
-            </p>
-          </div>
         </div>
       </div>
       <div class="mt-5 sm:mt-6">
@@ -52,9 +46,11 @@ const logInWith = async (provider: string) => {
           @click.prevent="logInWith('google')"
           type="button"
           block
-          color="indigo"
+          color="white"
+          variant="solid"
           icon="i-mdi-google"
           size="lg"
+          class="bg-white hover:bg-gray-50 text-gray-900 border border-gray-300"
         >
           Sign in with Google
         </UButton>
