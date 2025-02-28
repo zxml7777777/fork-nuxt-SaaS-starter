@@ -27,7 +27,7 @@
               ]"
               aria-hidden="true"
             />
-            {{ item.name }}
+            {{ $t(item.name) }}
           </NuxtLink>
         </li>
       </ul>
@@ -37,19 +37,19 @@
 <script setup lang="ts">
 const secondaryNavigation = [
   {
-    name: "Panel",
+    name: "dashboard.navigation.panel",
     href: "/dashboard",
     icon: "i-heroicons-document",
     current: true,
   },
   {
-    name: "Billing",
+    name: "dashboard.navigation.billing",
     href: "/dashboard/billing",
     icon: "i-heroicons-credit-card",
     current: false,
   },
   {
-    name: "Settings",
+    name: "dashboard.navigation.settings",
     href: "/dashboard/settings",
     icon: "i-heroicons-cog",
     current: false,

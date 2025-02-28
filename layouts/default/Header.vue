@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 import SignIn from "~/layouts/default/modals/SignIn.vue";
+import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
 
 const navigation = [
-  { name: "Pricing", href: "pricing" },
-  { name: "Docs", href: "docs" },
+  { name: "nav.pricing", href: "pricing" },
+  { name: "nav.docs", href: "docs" },
 ];
 const mobileMenuOpen = ref(false);
 const { status: authStatus } = useAuth();
@@ -46,21 +47,24 @@ const authStore = useAuthStore();
           >{{ item.name }}</NuxtLink
         >
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <button
-          v-if="authStatus === 'unauthenticated'"
-          @click.prevent="authStore.toggleSignInModal()"
-          class="text-sm font-semibold leading-6 text-gray-900"
-        >
-          Sign In <span aria-hidden="true">&rarr;</span>
-        </button>
-        <button
-          v-else
-          @click.prevent="navigateTo('/dashboard')"
-          class="text-sm font-semibold leading-6 text-gray-900"
-        >
-          Dashboard <span aria-hidden="true">&rarr;</span>
-        </button>
+      <div class="flex lg:flex-1 items-center gap-4 lg:justify-end">
+        <LanguageSwitcher />
+        <template v-if="authStatus === 'authenticated'">
+          <NuxtLink
+            to="/dashboard"
+            class="text-sm font-semibold leading-6 text-gray-900"
+          >
+            {{ $t('nav.dashboard') }}
+          </NuxtLink>
+        </template>
+        <template v-else>
+          <UButton
+            color="gray"
+            variant="ghost"
+            @click="authStore.toggleSignInModal()"
+            :label="$t('nav.signin')"
+          />
+        </template>
       </div>
     </nav>
     <HeadlessDialog

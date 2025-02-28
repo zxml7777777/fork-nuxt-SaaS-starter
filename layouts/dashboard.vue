@@ -13,6 +13,7 @@
 <script setup lang="ts">
 import Header from "./dashboard/Header.vue";
 import SecondaryNavigation from "./dashboard/SecondaryNavigation.vue";
+import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
 
 useSeoMeta({
   robots: "noindex, nofollow",

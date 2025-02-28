@@ -1,0 +1,42 @@
+{
+    "nav": {
+      "pricing": "Pricing",
+      "docs": "Docs",
+      "dashboard": "Dashboard",
+      "signin": "Sign In"
+    },
+    "hero": {
+      "title": "Kick off your next project with our SaaS starter",
+      "description": "Build using Nuxt 3, Prisma, Neon, Nuxt Auth, Resend, Nuxt ui, Stripe.",
+      "cta": {
+        "pricing": "Show pricing",
+        "github": "Stars on GitHub"
+      }
+    },
+    "features": {
+      "title": "Powerful features",
+      "subtitle": "Everything you need",
+      "description": "Our SaaS template provides all the foundational features you need to get started."
+    },
+    "footer": {
+      "backToWebsite": "Back to website",
+      "logOut": "Log Out"
+    },
+    "auth": {
+      "signIn": "Sign In",
+      "signInWith": "Sign in with {0}",
+      "welcome": "Welcome back"
+    },
+    "dashboard": {
+      "navigation": {
+        "panel": "Panel",
+        "billing": "Billing",
+        "settings": "Settings",
+        "documentation": "Documentation"
+      },
+      "backToWebsite": "Back to website",
+      "userMenu": {
+        "logOut": "Log Out"
+      }
+    }
+  }

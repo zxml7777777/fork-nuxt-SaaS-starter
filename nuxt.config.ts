@@ -1,11 +1,5 @@
-import vue from "@vitejs/plugin-vue";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  nitro: {
-    rollupConfig: {
-      plugins: [vue()],
-    },
-  },
   routeRules: {
     "/dashboard/**": { ssr: false },
   },
@@ -20,6 +14,7 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "@nuxt/eslint",
     "nuxt-og-image",
+    '@nuxtjs/i18n',
   ],
   content: {
     highlight: {
@@ -70,4 +65,19 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: "2024-07-06",
+
+  i18n: {
+    langDir: 'locales',
+    locales: [
+      { code: 'en', iso: 'en-US', file: 'en.json', name: 'English' },
+      { code: 'zh', iso: 'zh-CN', file: 'zh.json', name: '中文' }
+    ],
+    defaultLocale: 'en',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root'
+    }
+  }
 });

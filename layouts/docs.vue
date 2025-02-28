@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { NavItem } from "@nuxt/content";
 import Header from "./docs/Header.vue";
+import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
 const { data: navigation } = await useAsyncData<NavItem[]>("navigation", () =>
   fetchContentNavigation()
 );

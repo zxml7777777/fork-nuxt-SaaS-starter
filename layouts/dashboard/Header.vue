@@ -1,8 +1,9 @@
 <script setup>
+import { useAuth } from '#imports';
 const { data, signOut } = useAuth();
 const navigation = [
-  { name: "Dashboard", href: "/dashboard" },
-  { name: "Documentation", href: "/docs" },
+  { name: "dashboard.navigation.panel", href: "/dashboard" },
+  { name: "dashboard.navigation.documentation", href: "/docs" },
 ];
 const mobileMenuOpen = ref(false);
 </script>
@@ -44,10 +45,10 @@ const mobileMenuOpen = ref(false);
           >{{ item.name }}</NuxtLink
         >
       </nav>
-      <div class="flex flex-1 items-center justify-end gap-x-8">
+      <div class="flex flex-1 items-center justify-end gap-x-4">
         <nav aria-label="Global" class="flex space-x-10">
-          <NuxtLink to="/" class="text-sm font-medium text-gray-700"
-            ><span aria-hidden="true">&larr;</span> Back to website
+          <NuxtLink to="/" class="text-sm font-medium text-gray-700">
+            <span aria-hidden="true">&larr;</span> {{ $t('dashboard.backToWebsite') }}
           </NuxtLink>
         </nav>
         <HeadlessMenu as="div" class="relative inline-block text-left">
@@ -95,7 +96,8 @@ const mobileMenuOpen = ref(false);
                       'flex w-full px-4 py-2 text-sm text-red-900 dark:text-red-400',
                     ]"
                   >
-                    <UIcon name="i-mdi-logout" class="size-5 mr-1" /> Log Out
+                    <UIcon name="i-mdi-logout" class="size-5 mr-1" /> 
+                    {{ $t('dashboard.userMenu.logOut') }}
                   </button>
                 </HeadlessMenuItem>
               </div>

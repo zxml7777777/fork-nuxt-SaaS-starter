@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Footer from "./default/Footer.vue";
 import Header from "./default/Header.vue";
+import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
 import { SpeedInsights } from "@vercel/speed-insights/vue";
 useHead({
   titleTemplate: (titleChunk) => {

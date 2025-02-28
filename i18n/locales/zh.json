@@ -1,0 +1,42 @@
+{
+    "nav": {
+      "pricing": "定价",
+      "docs": "文档",
+      "dashboard": "控制台",
+      "signin": "登录"
+    },
+    "hero": {
+      "title": "使用我们的 SaaS 模板快速启动您的下一个项目",
+      "description": "使用 Nuxt 3、Prisma、Neon、Nuxt Auth、Resend、Nuxt UI、Stripe 构建。",
+      "cta": {
+        "pricing": "查看定价",
+        "github": "GitHub 星标"
+      }
+    },
+    "features": {
+      "title": "强大功能",
+      "subtitle": "一切您需要的功能",
+      "description": "我们的 SaaS 模板提供了您开始项目所需的所有基础功能。"
+    },
+    "footer": {
+      "backToWebsite": "返回网站",
+      "logOut": "退出登录"
+    },
+    "auth": {
+      "signIn": "登录",
+      "signInWith": "使用 {0} 登录",
+      "welcome": "欢迎回来"
+    },
+    "dashboard": {
+      "navigation": {
+        "panel": "控制面板",
+        "billing": "账单",
+        "settings": "设置",
+        "documentation": "文档"
+      },
+      "backToWebsite": "返回网站",
+      "userMenu": {
+        "logOut": "退出登录"
+      }
+    }
+  }

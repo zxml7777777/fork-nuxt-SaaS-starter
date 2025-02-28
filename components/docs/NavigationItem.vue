@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { NavItem } from "@nuxt/content";
+import type { NavItem } from '@nuxt/content/dist/runtime/types'
+import { useRoute } from 'nuxt/app'
+
+const route = useRoute()
 defineProps<{
   item: NavItem;
 }>();
@@ -11,7 +14,7 @@ defineProps<{
       v-if="!item.children || item.children.length === 0"
       :to="item._path"
       :class="[
-        $route.path === item._path ? 'bg-gray-50' : 'hover:bg-gray-50',
+        route.path === item._path ? 'bg-gray-50' : 'hover:bg-gray-50',
         'block rounded-md py-2 pr-2 pl-10 text-sm leading-6 font-semibold text-gray-700',
       ]"
     >
@@ -41,7 +44,7 @@ defineProps<{
               v-else
               :to="subItem._path"
               :class="[
-                $route.path === subItem._path
+                route.path === subItem._path
                   ? 'border-indigo-500'
                   : 'hover:bg-gray-50',
                 'block py-1 pr-2 pl-9 text-sm leading-6 text-gray-500 border-l',
