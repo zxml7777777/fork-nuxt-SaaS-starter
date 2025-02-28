@@ -1,31 +1,47 @@
-import { stripe } from "@/lib/stripe";
-import { absoluteUrl } from "~/utils/url";
-import { getServerSession } from "#auth";
-import type { Session } from "next-auth";
-import { prisma } from "~/lib/prisma";
-// Route is auto protected by the `auth` middleware (server/middleware/auth.ts) and Session is guaranteed to be present
+import { getServerSession } from '#auth'
+import { createCustomerPortalSession } from '~/lib/stripe'
+import { prisma } from '~/lib/prisma'
+
 export default defineEventHandler(async (event) => {
-  const session = (await getServerSession(event)) as Session;
-  if (!session.user || !session.user.email) {
-    return {
-      status: 403,
-      body: { error: "Unauthorized" },
-    };
-  }
+  try {
+    // Get user session
+    const session = await getServerSession(event)
+    if (!session?.user?.id) {
+      throw createError({
+        statusCode: 401,
+        message: 'Authentication required to manage subscription'
+      })
+    }
 
-  if (!session.user.stripeCustomerId) {
+    // Get user's Stripe customer ID
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { stripeCustomerId: true }
+    })
+
+    if (!user?.stripeCustomerId) {
+      throw createError({
+        statusCode: 400,
+        message: 'No payment information found for this user'
+      })
+    }
+
+    // Create customer portal session
+    try {
+      const portalSession = await createCustomerPortalSession(user.stripeCustomerId)
+      return {
+        url: portalSession.url
+      }
+    } catch (stripeError: any) {
+      throw createError({
+        statusCode: 500,
+        message: `Stripe error: ${stripeError.message}`
+      })
+    }
+  } catch (error: any) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "Invalid signature, body or secret",
-    });
+      statusCode: error.statusCode || 500,
+      message: error.message || 'Failed to create subscription management session'
+    })
   }
-  const stripeSession = await stripe.billingPortal.sessions.create({
-    customer: session.user.stripeCustomerId,
-    return_url: absoluteUrl("/dashboard/billing"),
-  });
-
-  const redirectUrl = stripeSession.url as string;
-  return {
-    redirectUrl: redirectUrl,
-  };
-});
+})

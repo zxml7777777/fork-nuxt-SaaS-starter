@@ -67,23 +67,28 @@
 import type { UserSubscriptionPlan } from "~/types";
 const toast = useToast();
 const manageSubscriptionLoading = ref(false);
+const isLoading = ref(false)
+
 async function handleManageSubscription() {
-  manageSubscriptionLoading.value = true;
-  const result: { redirectUrl?: string } = await $fetch(
-    "/api/subscriptions/manage",
-    {
-      method: "POST",
+  try {
+    manageSubscriptionLoading.value = true;
+    const response = await $fetch('/api/subscriptions/manage', {
+      method: 'POST'
+    });
+    
+    if (response?.url) {
+      window.location.href = response.url;
+    } else {
+      throw new Error('Failed to get subscription management URL');
     }
-  );
-  if (result.redirectUrl) {
-    navigateTo(result.redirectUrl, { external: true });
-  } else {
-    manageSubscriptionLoading.value = false;
+  } catch (error: any) {
     toast.add({
       title: "Error",
-      color: "red",
-      description: "An error occurred while processing your request.",
+      color: "red", 
+      description: error.data?.message || "Unable to open subscription management page. Please try again later.",
     });
+  } finally {
+    manageSubscriptionLoading.value = false;
   }
 }
 const { data: subscription } = await useFetch<UserSubscriptionPlan>(

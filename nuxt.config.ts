@@ -65,8 +65,8 @@ export default defineNuxtConfig({
     AuthSecret: "",
     GoogleClientId: "",
     GoogleClientSecret: "",
-    StripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
-    StripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
+    stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
+    stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
     ResendApiKey: "",
     // Stripe Price IDs
     StripePrices: {
@@ -80,7 +80,7 @@ export default defineNuxtConfig({
       }
     },
     public: {
-      SiteUrl: process.env.NUXT_PUBLIC_APP_URL,
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
       StripePrices: {
         pro: {
           monthly: process.env.NUXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,

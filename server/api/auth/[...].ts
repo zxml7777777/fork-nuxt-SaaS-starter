@@ -30,7 +30,7 @@ export default NuxtAuthHandler({
         }
 
         session.user.name = token.name;
-        session.user.image = token.picture;
+        session.user.image = token.picture || undefined;
         session.user.stripeCustomerId = token.stripeCustomerId;
       }
 
