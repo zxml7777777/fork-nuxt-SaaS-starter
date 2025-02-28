@@ -2,6 +2,16 @@ import type { User } from "@prisma/client";
 declare module "nuxt/schema" {
   interface PublicRuntimeConfig {
     SiteUrl: string;
+    StripePrices: {
+      pro: {
+        monthly: string;
+        yearly: string;
+      };
+      business: {
+        monthly: string;
+        yearly: string;
+      };
+    };
   }
 }
 declare module "@nuxt/schema" {
@@ -10,8 +20,34 @@ declare module "@nuxt/schema" {
   }
   interface ConfigSchema {
     runtimeConfig: {
-      public?: {
+      AuthSecret: string;
+      GoogleClientId: string;
+      GoogleClientSecret: string;
+      StripeSecretKey: string;
+      StripeWebhookSecret: string;
+      ResendApiKey: string;
+      StripePrices: {
+        pro: {
+          monthly: string;
+          yearly: string;
+        };
+        business: {
+          monthly: string;
+          yearly: string;
+        };
+      };
+      public: {
         SiteUrl: string;
+        StripePrices: {
+          pro: {
+            monthly: string;
+            yearly: string;
+          };
+          business: {
+            monthly: string;
+            yearly: string;
+          };
+        };
       };
     };
   }

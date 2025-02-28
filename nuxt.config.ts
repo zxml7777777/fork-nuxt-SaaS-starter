@@ -1,5 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  nitro: {
+    routeRules: {
+      '/**': {
+        headers: {
+          'Content-Security-Policy': "style-src 'self' https://m.stripe.network 'unsafe-inline';"
+        }
+      }
+    }
+  },
   routeRules: {
     "/dashboard/**": { ssr: false },
   },
@@ -56,22 +65,32 @@ export default defineNuxtConfig({
     AuthSecret: "",
     GoogleClientId: "",
     GoogleClientSecret: "",
-    StripeSecretKey: "",
-    StripeWebhookSecret: "",
+    StripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
+    StripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
     ResendApiKey: "",
     // Stripe Price IDs
     StripePrices: {
       pro: {
-        monthly: process.env.NUXT_STRIPE_PRO_PRICE_MONTHLY,
-        yearly: process.env.NUXT_STRIPE_PRO_PRICE_YEARLY,
+        monthly: process.env.NUXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,
+        yearly: process.env.NUXT_PUBLIC_STRIPE_PRO_YEARLY_PRICE_ID
       },
       business: {
-        monthly: process.env.NUXT_STRIPE_BUSINESS_PRICE_MONTHLY,
-        yearly: process.env.NUXT_STRIPE_BUSINESS_PRICE_YEARLY,
+        monthly: process.env.NUXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PRICE_ID,
+        yearly: process.env.NUXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PRICE_ID
       }
     },
     public: {
-      SiteUrl: "",
+      SiteUrl: process.env.NUXT_PUBLIC_APP_URL,
+      StripePrices: {
+        pro: {
+          monthly: process.env.NUXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,
+          yearly: process.env.NUXT_PUBLIC_STRIPE_PRO_YEARLY_PRICE_ID
+        },
+        business: {
+          monthly: process.env.NUXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PRICE_ID,
+          yearly: process.env.NUXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PRICE_ID
+        }
+      }
     },
   },
 
