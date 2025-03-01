@@ -9,9 +9,9 @@
       >
         <li v-for="item in secondaryNavigation" :key="item.name">
           <NuxtLink
-            :to="item.href"
+            :to="localePath(item.href)"
             :class="[
-              $route.path === item.href
+              route.path === item.href
                 ? 'bg-gray-50 text-indigo-600'
                 : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
               'group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold',
@@ -20,14 +20,14 @@
             <UIcon
               :name="item.icon"
               :class="[
-                $route.path === item.href
+                route.path === item.href
                   ? 'text-indigo-600'
                   : 'text-gray-400 group-hover:text-indigo-600',
                 'h-6 w-6 shrink-0',
               ]"
               aria-hidden="true"
             />
-            {{ $t(item.name) }}
+            {{ t(item.name) }}
           </NuxtLink>
         </li>
       </ul>
@@ -35,6 +35,10 @@
   </aside>
 </template>
 <script setup lang="ts">
+const { t } = useI18n();
+const localePath = useLocalePath();
+const route = useRoute();
+
 const secondaryNavigation = [
   {
     name: "dashboard.navigation.panel",

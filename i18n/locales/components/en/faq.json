@@ -1,0 +1,23 @@
+{
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "What is Devstack?",
+        "answer": "Devstack is a full-featured platform that helps you build and deploy web applications in a matter of minutes."
+      },
+      {
+        "question": "How do I cancel my subscription?",
+        "answer": "You can cancel your subscription at any time by logging into your account and following the instructions."
+      },
+      {
+        "question": "Can I change my plan later on?",
+        "answer": "Yes, you can upgrade or downgrade your plan at any time. Your new plan will take effect at the end of your current billing cycle."
+      },
+      {
+        "question": "Do you offer discounts for non-profit organizations?",
+        "answer": "Yes, we offer a 20% discount to non-profit organizations. Please contact us for more information."
+      }
+    ]
+  }
+} 

@@ -1,0 +1,57 @@
+{
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Pricing plans for teams of all sizes",
+    "description": "Choose an affordable plan that's packed with the best features for engaging your audience, creating customer loyalty, and driving sales.",
+    "frequency": {
+      "label": "Payment frequency",
+      "monthly": "Monthly",
+      "yearly": "Yearly (-20%)"
+    },
+    "mostPopular": "Most popular",
+    "perMonth": "/month",
+    "yearlyCharge": "{0} will be charged when annual",
+    "buttons": {
+      "signIn": "Sign In",
+      "buyPlan": "Buy plan",
+      "dashboard": "Dashboard"
+    },
+    "errorMessage": "An error occurred while processing your request.",
+    "plans": {
+      "Starter": {
+        "title": "Starter",
+        "description": "For Beginners",
+        "benefits": {
+          "0": "Up to 100 monthly posts",
+          "1": "Basic analytics and reporting",
+          "2": "Access to standard templates"
+        }
+      },
+      "Pro": {
+        "title": "Pro",
+        "description": "Unlock Advanced Features",
+        "benefits": {
+          "0": "Up to 500 monthly posts",
+          "1": "Advanced analytics and reporting",
+          "2": "Access to business templates",
+          "3": "Priority customer support",
+          "4": "Exclusive webinars and training"
+        }
+      },
+      "Business": {
+        "title": "Business",
+        "description": "For Power Users",
+        "benefits": {
+          "0": "Unlimited posts",
+          "1": "Real-time analytics and reporting",
+          "2": "Access to all templates, including custom branding",
+          "3": "24/7 business customer support",
+          "4": "Personalized onboarding and account management"
+        }
+      }
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions"
+  }
+} 

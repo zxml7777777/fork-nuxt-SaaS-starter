@@ -1,0 +1,75 @@
+{
+  "dashboard": {
+    "navigation": {
+      "panel": "Panel",
+      "billing": "Billing",
+      "settings": "Settings",
+      "documentation": "Documentation"
+    },
+    "backToWebsite": "Back to website",
+    "userMenu": {
+      "logOut": "Log Out"
+    },
+    "panel": {
+      "title": "Panel",
+      "welcome": "Welcome to the dashboard",
+      "overview": "Dashboard Overview",
+      "stats": "Key Statistics",
+      "activity": "Recent Activity",
+      "noActivity": "No recent activity to display"
+    },
+    "billing": {
+      "title": "Billing",
+      "subtitle": "Manage your billing information and subscription plan",
+      "demoAlert": "Demo App!",
+      "demoDescription": "Nuxt SaaS Starter app is a demo app using a Stripe test environment. You can find a list of test card numbers on the",
+      "stripeDoc": "Stripe documentation",
+      "currentPlan": "Current Plan",
+      "subscriptionDetails": "Subscription Details",
+      "paymentMethod": "Payment Method",
+      "billingHistory": "Billing History",
+      "noHistory": "No billing history available"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Manage account and website settings",
+      "profile": {
+        "title": "Profile",
+        "description": "This information will be displayed publicly so be careful what you share",
+        "name": "Name",
+        "email": "Email address",
+        "update": "Update",
+        "role": "Role",
+        "comingSoon": "Coming soon",
+        "updated": "Profile updated",
+        "updateSuccess": "Your profile has been updated successfully."
+      },
+      "account": {
+        "title": "Account",
+        "description": "Manage your account settings",
+        "language": "Language",
+        "timezone": "Timezone",
+        "notifications": "Notifications",
+        "security": "Security",
+        "twoFactor": "Two-factor authentication",
+        "enable": "Enable",
+        "disable": "Disable"
+      },
+      "deleteAccount": {
+        "title": "Delete account",
+        "description": "No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently.",
+        "button": "Yes, delete my account",
+        "modal": {
+          "title": "Delete account",
+          "warning": "Warning: This will permanently delete your account and your active subscription!",
+          "confirmText": "To confirm, type",
+          "confirmPhrase": "confirm delete account",
+          "inBox": "in the box below",
+          "button": "Delete my account",
+          "invalidVerification": "Invalid verification",
+          "pleaseType": "Please type 'confirm delete account' to confirm."
+        }
+      }
+    }
+  }
+} 

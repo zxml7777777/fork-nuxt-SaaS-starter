@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     routeRules: {
       '/**': {
         headers: {
-          'Content-Security-Policy': "style-src 'self' https://m.stripe.network 'unsafe-inline';"
+          'Content-Security-Policy': "style-src 'self' https://m.stripe.network https://fonts.googleapis.com 'unsafe-inline';"
         }
       }
     }
@@ -12,7 +12,10 @@ export default defineNuxtConfig({
   routeRules: {
     "/dashboard/**": { ssr: false },
   },
-  css: ["~/assets/main.css", "~/assets/scss/main.scss"],
+  css: [
+    "~/assets/css/main.css",
+    "~/assets/scss/main.scss"
+  ],
   devtools: { enabled: true },
   modules: [
     "@nuxt/ui",
@@ -23,7 +26,8 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "@nuxt/eslint",
     "nuxt-og-image",
-    '@nuxtjs/i18n',
+    "@nuxtjs/i18n",
+    'nuxt-site-config',
   ],
   content: {
     highlight: {
@@ -52,8 +56,17 @@ export default defineNuxtConfig({
   },
 
   app: {
-    pageTransition: { name: "page", mode: "out-in" },
-    layoutTransition: { name: "fade", mode: "out-in" },
+    pageTransition: {
+      name: 'page-transition',
+      mode: 'out-in'
+    },
+    layoutTransition: {
+      name: 'layout',
+      mode: 'out-in'
+    },
+    head: {
+      // ... existing head config if any
+    }
   },
 
   typescript: {
@@ -100,17 +113,97 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-07-06",
 
   i18n: {
-    langDir: 'locales',
+    langDir: 'locales',  // 移除开头的 'i18n/'，因为模块会自动添加
     locales: [
-      { code: 'en', iso: 'en-US', file: 'en.json', name: 'English' },
-      { code: 'zh', iso: 'zh-CN', file: 'zh.json', name: '中文' }
+      { 
+        code: 'en', 
+        iso: 'en-US', 
+        files: [
+          'en.json',
+          'components/en/header.json',
+          'components/en/footer.json',
+          'components/en/dashboard.json',
+          'components/en/hero.json',
+          'components/en/auth.json',
+          'components/en/features.json',
+          'components/en/pricing.json',
+          'components/en/faq.json'
+        ],
+        name: 'English' 
+      },
+      { 
+        code: 'zh', 
+        iso: 'zh-CN', 
+        files: [
+          'zh.json',
+          'components/zh/header.json',
+          'components/zh/footer.json',
+          'components/zh/dashboard.json',
+          'components/zh/hero.json',
+          'components/zh/auth.json',
+          'components/zh/features.json',
+          'components/zh/pricing.json',
+          'components/zh/faq.json'
+        ],
+        name: '中文' 
+      }
     ],
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
-      redirectOn: 'root'
+      cookieDomain: null,
+      cookieSecure: process.env.NODE_ENV === 'production',
+      cookieCrossOrigin: true,
+      redirectOn: 'root',
+      alwaysRedirect: true
+    },
+    lazy: true,
+    pages: {
+      'index': {
+        en: '/',
+        zh: '/'
+      },
+      'dashboard/index': {
+        en: '/dashboard',
+        zh: '/dashboard'
+      },
+      'pricing': {
+        en: '/pricing',
+        zh: '/pricing'
+      }
+    },
+    customRoutes: 'config',
+    vueI18n: './i18n/vue-i18n.options.ts',
+    skipSettingLocaleOnNavigate: false
+  },
+
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    name: '您的网站名称',
+    robots: {
+      // 默认配置
+      enabled: true,
+      // 可以添加更多自定义规则
+      disallow: [],
+      allow: ['/'],
+    },
+    i18n: {
+      locales: ['en', 'zh'],
+      defaultLocale: 'en',
+      seo: true,
+      routesNameSeparator: '___',
+      strategy: 'prefix_except_default',
+      detectBrowserLanguage: {
+        useCookie: true,
+        cookieKey: 'i18n_redirected',
+        cookieDomain: null,
+        cookieSecure: process.env.NODE_ENV === 'production',
+        cookieCrossOrigin: true,
+        redirectOn: 'root',
+        alwaysRedirect: true
+      }
     }
-  }
+  },
 });

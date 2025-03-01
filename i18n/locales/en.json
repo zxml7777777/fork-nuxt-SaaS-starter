@@ -38,5 +38,13 @@
       "userMenu": {
         "logOut": "Log Out"
       }
+    },
+    "pricing": {
+      "title": "Pricing",
+      "subtitle": "Pricing plans for teams of all sizes",
+      "description": "Choose an affordable plan that's packed with the best features for engaging your audience, creating customer loyalty, and driving sales."
+    },
+    "common": {
+      "error": "Error"
     }
   }

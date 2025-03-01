@@ -1,9 +1,14 @@
 <script setup>
 import { useAuth } from '#imports';
+import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
+
 const { data, signOut } = useAuth();
+const { t } = useI18n();
+const localePath = useLocalePath();
+
 const navigation = [
-  { name: "panel", href: "/dashboard" },
-  { name: "documentation", href: "/docs" },
+  { name: "dashboard.navigation.panel", href: "/dashboard" },
+  { name: "dashboard.navigation.documentation", href: "/docs" },
 ];
 const mobileMenuOpen = ref(false);
 </script>
@@ -28,7 +33,10 @@ const mobileMenuOpen = ref(false);
             aria-hidden="true"
           />
         </button>
-        <SvgLogo class="h-8 w-auto" />
+        <NuxtLink :to="localePath('/')" class="-m-1.5 p-1.5">
+          <span class="sr-only">Your Company</span>
+          <SvgLogo class="h-8 w-auto" />
+        </NuxtLink>
       </div>
       <nav
         class="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700"
@@ -41,14 +49,15 @@ const mobileMenuOpen = ref(false);
           ]"
           v-for="(item, itemIdx) in navigation"
           :key="itemIdx"
-          :to="item.href"
-          >{{ item.name }}</NuxtLink
+          :to="localePath(item.href)"
+          >{{ t(item.name) }}</NuxtLink
         >
       </nav>
       <div class="flex flex-1 items-center justify-end gap-x-4">
+        <LanguageSwitcher />
         <nav aria-label="Global" class="flex space-x-10">
-          <NuxtLink to="/" class="text-sm font-medium text-gray-700">
-            <span aria-hidden="true">&larr;</span> {{ $t('dashboard.backToWebsite') }}
+          <NuxtLink :to="localePath('/')" class="text-sm font-medium text-gray-700">
+            <span aria-hidden="true">&larr;</span> {{ t('dashboard.backToWebsite') }}
           </NuxtLink>
         </nav>
         <HeadlessMenu as="div" class="relative inline-block text-left">
@@ -97,7 +106,7 @@ const mobileMenuOpen = ref(false);
                     ]"
                   >
                     <UIcon name="i-mdi-logout" class="size-5 mr-1" /> 
-                    {{ $t('dashboard.userMenu.logOut') }}
+                    {{ t('dashboard.userMenu.logOut') }}
                   </button>
                 </HeadlessMenuItem>
               </div>
@@ -130,7 +139,7 @@ const mobileMenuOpen = ref(false);
             />
           </button>
           <div class="-ml-0.5">
-            <NuxtLink href="#" class="-m-1.5 block p-1.5">
+            <NuxtLink :to="localePath('/')" class="-m-1.5 p-1.5">
               <span class="sr-only">Your Company</span>
               <SvgLogo class="h-8 w-auto" />
             </NuxtLink>
@@ -140,9 +149,9 @@ const mobileMenuOpen = ref(false);
           <NuxtLink
             v-for="item in navigation"
             :key="item.name"
-            :to="item.href"
+            :to="localePath(item.href)"
             class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-            >{{ item.name }}</NuxtLink
+            >{{ t(item.name) }}</NuxtLink
           >
         </div>
       </HeadlessDialogPanel>

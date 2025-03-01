@@ -1,0 +1,10 @@
+{
+  "hero": {
+    "title": "Kick off your next project with our SaaS starter",
+    "description": "Build using Nuxt 3, Prisma, Neon, Nuxt Auth, Resend, Nuxt ui, Stripe.",
+    "cta": {
+      "pricing": "Show pricing",
+      "github": "Stars on GitHub"
+    }
+  }
+} 

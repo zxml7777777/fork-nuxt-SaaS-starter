@@ -6,6 +6,8 @@ const { data: stars } = await useFetch(
   }
 );
 const siteConfig = useAppConfig().site;
+const { t } = useI18n();
+const localePath = useLocalePath();
 </script>
 
 <template>
@@ -46,21 +48,19 @@ const siteConfig = useAppConfig().site;
           <h1
             class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
           >
-            Kick off your next project with our
-            <span class="font-bold text-indigo-500"> SaaS starter </span>
+            {{ t('hero.title') }}
           </h1>
           <p class="mt-6 text-lg leading-8 text-gray-600">
-            Build using Nuxt 3, Prisma, Neon, Nuxt Auth, Resend, Nuxt ui,
-            Stripe.
+            {{ t('hero.description') }}
           </p>
           <div class="mt-10 flex items-center justify-center gap-x-6">
             <UButton
-              to="pricing"
+              :to="localePath('/pricing')"
               icon="i-heroicons-arrow-right"
               size="lg"
               color="indigo"
               variant="solid"
-              label="Show pricing"
+              :label="t('hero.cta.pricing')"
               :trailing="true"
             />
             <UButton
@@ -73,7 +73,7 @@ const siteConfig = useAppConfig().site;
               variant="solid"
               :trailing="false"
             >
-              Stars on GitHub: {{ nFormatter(stars?.stargazers_count) }}
+              {{ t('hero.cta.github') }}: {{ nFormatter(stars?.stargazers_count) }}
             </UButton>
           </div>
         </div>

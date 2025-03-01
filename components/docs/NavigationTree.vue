@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import type { NavItem } from '@nuxt/content/dist/runtime/types'
+import NavigationItem from './NavigationItem.vue'
+
+// 显式定义组件名称
+defineOptions({
+  name: 'DocsNavigationTree'
+})
+
 defineProps<{
   navigation: NavItem[];
 }>();

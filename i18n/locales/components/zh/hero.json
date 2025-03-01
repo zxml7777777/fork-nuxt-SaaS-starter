@@ -1,0 +1,10 @@
+{
+  "hero": {
+    "title": "使用我们的 SaaS 模板快速启动您的下一个项目",
+    "description": "使用 Nuxt 3、Prisma、Neon、Nuxt Auth、Resend、Nuxt UI、Stripe 构建。",
+    "cta": {
+      "pricing": "查看定价",
+      "github": "GitHub 星标"
+    }
+  }
+} 

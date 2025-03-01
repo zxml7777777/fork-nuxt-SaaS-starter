@@ -1,0 +1,75 @@
+{
+  "dashboard": {
+    "navigation": {
+      "panel": "控制面板",
+      "billing": "账单",
+      "settings": "设置",
+      "documentation": "文档"
+    },
+    "backToWebsite": "返回网站",
+    "userMenu": {
+      "logOut": "退出登录"
+    },
+    "panel": {
+      "title": "控制面板",
+      "welcome": "欢迎使用控制面板",
+      "overview": "仪表盘概览",
+      "stats": "关键统计数据",
+      "activity": "最近活动",
+      "noActivity": "暂无最近活动"
+    },
+    "billing": {
+      "title": "账单",
+      "subtitle": "管理您的账单信息和订阅计划",
+      "demoAlert": "演示应用！",
+      "demoDescription": "Nuxt SaaS Starter 应用是使用 Stripe 测试环境的演示应用。您可以在以下位置找到测试卡号列表",
+      "stripeDoc": "Stripe 文档",
+      "currentPlan": "当前计划",
+      "subscriptionDetails": "订阅详情",
+      "paymentMethod": "支付方式",
+      "billingHistory": "账单历史",
+      "noHistory": "暂无账单历史"
+    },
+    "settings": {
+      "title": "设置",
+      "subtitle": "管理账户和网站设置",
+      "profile": {
+        "title": "个人资料",
+        "description": "此信息将公开显示，请谨慎分享",
+        "name": "姓名",
+        "email": "电子邮箱",
+        "update": "更新",
+        "role": "角色",
+        "comingSoon": "即将推出",
+        "updated": "个人资料已更新",
+        "updateSuccess": "您的个人资料已成功更新。"
+      },
+      "account": {
+        "title": "账户",
+        "description": "管理您的账户设置",
+        "language": "语言",
+        "timezone": "时区",
+        "notifications": "通知",
+        "security": "安全",
+        "twoFactor": "两步验证",
+        "enable": "启用",
+        "disable": "禁用"
+      },
+      "deleteAccount": {
+        "title": "删除账户",
+        "description": "不想再使用我们的服务？您可以在此删除您的账户。此操作不可逆转。与此账户相关的所有信息将被永久删除。",
+        "button": "是的，删除我的账户",
+        "modal": {
+          "title": "删除账户",
+          "warning": "警告：这将永久删除您的账户和您的活跃订阅！",
+          "confirmText": "确认删除，请输入",
+          "confirmPhrase": "confirm delete account",
+          "inBox": "在下面的框中",
+          "button": "删除我的账户",
+          "invalidVerification": "验证无效",
+          "pleaseType": "请输入'confirm delete account'以确认。"
+        }
+      }
+    }
+  }
+} 

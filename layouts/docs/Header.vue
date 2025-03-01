@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 import type { NavItem } from "@nuxt/content";
+import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
+
 const { data: authSession, signOut, status: authStatus } = useAuth();
 const uiStore = useUIStore();
 const siteConfig = useAppConfig().site;
@@ -29,6 +31,7 @@ const navigationItems = inject<NavItem[]>("navigation", []);
       </div>
       <DocsSearchBar />
       <div class="flex items-center justify-end lg:flex-1 gap-1.5">
+        <LanguageSwitcher />
         <DocsSearchButton />
         <UButton
           icon="i-simple-icons-github"

@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 全局过渡效果 */
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: scale(0.95) translateY(30px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: scale(0.95) translateY(-30px);
+}
+
+/* 页面过渡动画 */
+.page-transitioning {
+  animation: pageTransition 0.5s forwards;
+}
+
+@keyframes pageTransition {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+    filter: blur(5px);
+  }
+}
+
+/* 3D翻转效果 */
+.flip-enter-active,
+.flip-leave-active {
+  transition: all 0.5s;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.flip-enter-from {
+  transform: rotateY(180deg);
+  opacity: 0;
+}
+
+.flip-leave-to {
+  transform: rotateY(-180deg);
+  opacity: 0;
+}
+
+/* 滑动效果 */
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.slide-enter-from {
+  transform: translateX(-100px);
+  opacity: 0;
+}
+
+.slide-leave-to {
+  transform: translateX(100px);
+  opacity: 0;
+}
+
+/* 缩放效果 */
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.zoom-enter-from {
+  transform: scale(0.5);
+  opacity: 0;
+}
+
+.zoom-leave-to {
+  transform: scale(1.5);
+  opacity: 0;
+}
+
+/* 确保过渡效果在整个应用中生效 */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  transition: background-color 0.3s ease;
+}
+
+/* 添加一些动画效果 */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+} 

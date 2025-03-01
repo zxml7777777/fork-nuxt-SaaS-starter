@@ -5,9 +5,10 @@ import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
 
 const route = useRoute();
 const { t } = useI18n();
+const localePath = useLocalePath();
 const navigation = [
-  { name: "pricing", href: "pricing" },
-  { name: "docs", href: "docs" },
+  { name: "pricing", href: "/pricing" },
+  { name: "docs", href: "/docs" },
 ];
 const mobileMenuOpen = ref(false);
 const { status: authStatus } = useAuth();
@@ -22,7 +23,7 @@ const authStore = useAuthStore();
       aria-label="Global"
     >
       <div class="flex lg:flex-1">
-        <NuxtLink to="/" class="-m-1.5 p-1.5">
+        <NuxtLink :to="localePath('/')" class="-m-1.5 p-1.5">
           <span class="sr-only">Your Company</span>
           <SvgLogo class="h-8 w-auto" aria-hidden="true" />
         </NuxtLink>
@@ -41,19 +42,19 @@ const authStore = useAuthStore();
         <NuxtLink
           v-for="item in navigation"
           :key="item.name"
-          :to="item.href"
+          :to="localePath(item.href)"
           class="text-sm font-semibold leading-6"
           :class="[
-            route.name === item.href ? 'text-indigo-600' : 'text-gray-900',
+            route.path.includes(item.href) ? 'text-indigo-600' : 'text-gray-900',
           ]"
-          >{{ item.name }}</NuxtLink
+          >{{ t(`nav.${item.name}`) }}</NuxtLink
         >
       </div>
       <div class="flex lg:flex-1 items-center gap-4 lg:justify-end">
         <LanguageSwitcher />
         <template v-if="authStatus === 'authenticated'">
           <NuxtLink
-            to="/dashboard"
+            :to="localePath('/dashboard')"
             class="text-sm font-semibold leading-6 text-gray-900"
           >
             {{ t('nav.dashboard') }}
@@ -80,7 +81,7 @@ const authStore = useAuthStore();
         class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
       >
         <div class="flex items-center justify-between">
-          <NuxtLink to="/" class="-m-1.5 p-1.5">
+          <NuxtLink :to="localePath('/')" class="-m-1.5 p-1.5">
             <span class="sr-only">Your Company</span>
             <SvgLogo class="h-8 w-auto" aria-hidden="true" />
           </NuxtLink>
@@ -99,22 +100,25 @@ const authStore = useAuthStore();
               <NuxtLink
                 v-for="item in navigation"
                 :key="item.name"
-                :to="item.href"
+                :to="localePath(item.href)"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50"
                 :class="[
-                  route.name === item.href
+                  route.path.includes(item.href)
                     ? 'text-indigo-600'
                     : 'text-gray-900',
                 ]"
-                >{{ item.name }}</NuxtLink
+                >{{ t(`nav.${item.name}`) }}</NuxtLink
               >
+              <div class="py-2 px-3">
+                <LanguageSwitcher />
+              </div>
             </div>
             <div class="py-6">
               <button
                 @click.prevent="authStore.toggleSignInModal()"
                 class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
               >
-                Sign In
+                {{ t('nav.signin') }}
               </button>
             </div>
           </div>
