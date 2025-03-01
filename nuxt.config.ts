@@ -82,7 +82,7 @@ export default defineNuxtConfig({
     },
 
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
+      SiteUrl: process.env.NUXT_PUBLIC_SITE_URL,
       StripePrices: {
         pro: {
           monthly: process.env.NUXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,
