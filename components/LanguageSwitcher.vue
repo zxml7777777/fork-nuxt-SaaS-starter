@@ -1,5 +1,5 @@
 <template>
-  <div class="language-switcher">
+  <div v-if="isHomePage" class="language-switcher">
     <UDropdown :items="dropdownItems" :popper="{ placement: 'bottom-end' }">
       <UButton
         color="gray"
@@ -33,6 +33,13 @@ const isLanguageSwitching = inject('isLanguageSwitching', ref(false))
 
 const currentLocale = computed(() => locale.value)
 const availableLocales = computed(() => (locales.value as any[]))
+
+// 判断是否在主页
+const isHomePage = computed(() => {
+  const path = router.currentRoute.value.path
+  // 检查是否是根路径或带有语言前缀的根路径（/、/en、/zh）
+  return path === '/' || path === '/en' || path === '/zh' || path === '/en/' || path === '/zh/' || path === '/zh/zh'
+})
 
 // 获取当前语言的名称
 const currentLocaleName = computed(() => {
@@ -98,18 +105,24 @@ const switchLanguage = async (localeCode: string) => {
     if (path) {
       console.log(`Navigating to localized path: ${path}`);
       
-      // 添加强制刷新参数，避免hydration mismatch
-      const navigatePath = path + (path.includes('?') ? '&' : '?') + '_ts=' + Date.now();
-      console.log(`Final navigation path with timestamp: ${navigatePath}`);
+      // 使用客户端导航而不是强制刷新
+      // 首先检查当前路径是否已经是目标路径（去除查询参数）
+      const currentPathWithoutQuery = router.currentRoute.value.fullPath.split('?')[0];
+      const targetPathWithoutQuery = path.split('?')[0];
       
-      // 强制刷新页面以确保导航数据重新加载
-      window.location.href = navigatePath;
+      if (currentPathWithoutQuery === targetPathWithoutQuery) {
+        console.log('Already on correct path, no navigation needed');
+        // 如果已经在正确的路径上，只需要更新语言状态
+        isLanguageSwitching.value = false;
+        return;
+      }
+      
+      // 使用Nuxt的navigateTo进行客户端导航
+      await navigateTo(path, { replace: true });
     } else {
-      console.warn('No localized path found, reloading page');
-      // 如果没有找到本地化路径，尝试刷新页面
-      window.location.href = window.location.pathname + 
-        (window.location.pathname.includes('?') ? '&' : '?') + 
-        '_locale=' + localeCode + '&_ts=' + Date.now();
+      console.warn('No localized path found, updating locale only');
+      // 如果没有找到本地化路径，只更新语言状态
+      isLanguageSwitching.value = false;
     }
   } catch (error) {
     console.error('Error during language switch:', error);

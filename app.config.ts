@@ -5,7 +5,7 @@ export default defineAppConfig({
   },
   site: {
     name: "Nova",
-    description: "设计与性能的完美融合",
+    description: "Perfect Fusion of Design and Performance",
     logo: "/logo.svg",
     social: {
       twitter: "https://twitter.com",
@@ -17,11 +17,11 @@ export default defineAppConfig({
     siteName: "Nova",
   },
   footer: {
-    credits: "Nova © 2024. 保留所有权利。",
+    credits: "Nova © 2024. All Rights Reserved.",
     navigation: [
-      { name: "选购", href: "/pricing" },
-      { name: "支持", href: "/docs" },
-      { name: "隐私", href: "/privacy" },
+      { name: "Pricing", href: "/pricing" },
+      { name: "Support", href: "/docs" },
+      { name: "Privacy", href: "/privacy" },
     ],
     links: [
       {
@@ -40,18 +40,18 @@ export default defineAppConfig({
   },
   subscriptions: {
     frequencies: [
-      { value: "monthly", label: "月付", default: true },
-      { value: "yearly", label: "年付（节省20%）" },
+      { value: "monthly", label: "Monthly", default: true },
+      { value: "yearly", label: "Yearly (Save 20%)" },
     ],
-    currency: "CNY",
+    currency: "USD",
     plans: [
       {
         title: "Nova",
-        description: "基础体验",
+        description: "Basic Experience",
         benefits: [
-          "简洁直观的用户界面",
-          "基础数据分析",
-          "标准模板库",
+          "Clean and intuitive user interface",
+          "Basic data analytics",
+          "Standard template library",
         ],
         prices: {
           monthly: 0,
@@ -65,17 +65,17 @@ export default defineAppConfig({
       {
         mostPopular: true,
         title: "Nova Pro",
-        description: "专业创作体验",
+        description: "Professional Creative Experience",
         benefits: [
-          "高级用户界面定制",
-          "详细数据分析与报告",
-          "专业模板库",
-          "优先技术支持",
-          "专属培训资源",
+          "Advanced UI customization",
+          "Detailed data analytics and reporting",
+          "Professional template library",
+          "Priority technical support",
+          "Exclusive training resources",
         ],
         prices: {
-          monthly: 99,
-          yearly: 999,
+          monthly: 14.99,
+          yearly: 143.90,
         },
         stripeIds: {
           monthly: "",
@@ -84,17 +84,17 @@ export default defineAppConfig({
       },
       {
         title: "Nova Max",
-        description: "无限创作可能",
+        description: "Unlimited Creative Possibilities",
         benefits: [
-          "完全无限制使用",
-          "实时数据分析",
-          "独家定制模板",
-          "24/7专属客户支持",
-          "个性化入职培训",
+          "Completely unlimited usage",
+          "Real-time data analytics",
+          "Exclusive custom templates",
+          "24/7 dedicated customer support",
+          "Personalized onboarding",
         ],
         prices: {
-          monthly: 199,
-          yearly: 1999,
+          monthly: 29.99,
+          yearly: 287.90,
         },
         stripeIds: {
           monthly: "",
@@ -104,19 +104,19 @@ export default defineAppConfig({
     ],
   },
   pricing: {
-    title: "选购方案",
-    subtitle: "为您的创意提供最佳支持",
+    title: "Choose a Plan",
+    subtitle: "Best Support for Your Creative Ideas",
     description:
-      "选择一个适合您需求的方案，体验卓越设计与强大功能的完美结合。",
+      "Select a plan that fits your needs and experience the perfect combination of excellent design and powerful functionality.",
   },
   CTA: {
-    title: "准备好开启创新之旅了吗？",
+    title: "Ready to Start Your Innovation Journey?",
     description:
-      "立即注册Nova，在几分钟内开始创建令人惊叹的应用。",
+      "Sign up for Nova now and start creating amazing applications in minutes.",
     buttons: {
       auth: [
         {
-          label: "进入控制台",
+          label: "Go to Dashboard",
           to: "/dashboard",
           size: "lg",
           icon: "i-heroicons-arrow-right",
@@ -125,7 +125,7 @@ export default defineAppConfig({
       ],
       guest: [
         {
-          label: "了解更多",
+          label: "Learn More",
           to: "/pricing",
           size: "lg",
           icon: "i-heroicons-arrow-right",
@@ -135,57 +135,57 @@ export default defineAppConfig({
     },
   },
   features: {
-    title: "创新科技",
-    subtitle: "重新定义应用开发体验",
+    title: "Innovative Technology",
+    subtitle: "Redefining the App Development Experience",
     description:
-      "Nova提供极致简约而强大的平台，让您的创意以前所未有的速度成为现实。",
+      "Nova provides an extremely minimalist yet powerful platform, turning your ideas into reality at unprecedented speed.",
     items: [
       {
-        title: "优雅设计",
+        title: "Elegant Design",
         description:
-          "简约而不简单的界面设计，为您的创意提供完美展示。",
+          "Simple yet sophisticated interface design, perfectly showcasing your creativity.",
         icon: "i-simple-icons-apple",
       },
       {
-        title: "闪电部署",
-        description: "一键部署应用到云端，无需复杂配置。",
+        title: "Lightning-Fast Deployment",
+        description: "One-click deployment to the cloud, no complex configuration needed.",
         icon: "i-simple-icons-vercel",
       },
       {
-        title: "无缝集成",
-        description: "与您喜爱的工具和服务完美融合，提升工作效率。",
+        title: "Seamless Integration",
+        description: "Perfect integration with your favorite tools and services, enhancing productivity.",
         icon: "i-simple-icons-figma",
       },
       {
-        title: "卓越性能",
+        title: "Outstanding Performance",
         description:
-          "强大的性能支持，轻松应对数百万用户访问。",
+          "Powerful performance support, easily handling millions of user visits.",
         icon: "i-simple-icons-amazonaws",
       },
     ],
   },
   faq: {
-    title: "常见问题",
+    title: "Frequently Asked Questions",
     items: [
       {
-        question: "什么是Nova？",
+        question: "What is Nova?",
         answer:
-          "Nova是一个融合了设计与性能的应用开发平台，帮助您在几分钟内构建并部署专业级应用。",
+          "Nova is an application development platform that combines design and performance, helping you build and deploy professional-grade applications in minutes.",
       },
       {
-        question: "如何取消订阅？",
+        question: "How do I cancel my subscription?",
         answer:
-          "您可以随时登录账户并按照说明取消订阅。我们尊重您的选择，不会设置复杂的取消流程。",
+          "You can log into your account at any time and follow the instructions to cancel your subscription. We respect your choice and won't set up complicated cancellation processes.",
       },
       {
-        question: "我可以稍后更改我的方案吗？",
+        question: "Can I change my plan later?",
         answer:
-          "是的，您可以随时升级或降级您的方案。新方案将在当前计费周期结束时生效。",
+          "Yes, you can upgrade or downgrade your plan at any time. The new plan will take effect at the end of your current billing cycle.",
       },
       {
-        question: "Nova与其他平台相比有什么优势？",
+        question: "What advantages does Nova have over other platforms?",
         answer:
-          "Nova专注于提供极致的用户体验和设计美感，同时保持强大的功能性和性能。我们相信简约而不简单的设计理念。",
+          "Nova focuses on providing an exceptional user experience and design aesthetics while maintaining powerful functionality and performance. We believe in the philosophy of simplicity without being simplistic.",
       },
     ],
   },

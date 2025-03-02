@@ -32,11 +32,10 @@
         <USkeleton v-if="!subscription" class="w-full h-64" />
         <div v-else>
           <h2 class="text-base font-semibold leading-7 text-gray-900">
-            Subscription plan
+            {{ t('dashboard.billing.subscriptionPlan') }}
           </h2>
           <p class="mt-1 text-sm leading-6 text-gray-500 mb-2">
-            You are currently on to the
-            <strong>{{ subscription.title }}</strong> plan.
+            {{ t('dashboard.billing.currentPlan', { plan: subscription.title }) }}
           </p>
           <p
             class="mt-1 text-sm leading-6 mb-2 font-semibold"
@@ -45,9 +44,9 @@
           >
             {{
               subscription.isCanceled
-                ? "Your plan will be canceled on: "
-                : "Your plan renews on:"
-            }}
+                ? t('dashboard.billing.planCancelDate')
+                : t('dashboard.billing.planRenewDate')
+            }}:
             {{ formatDate(subscription.stripeCurrentPeriodEnd) }}
           </p>
           <div class="pt-2">
@@ -58,9 +57,9 @@
               size="lg"
               v-if="subscription.isPaid && subscription.stripeCustomerId"
             >
-              Manage subscription
+              {{ t('dashboard.billing.manageSubscription') }}
             </UButton>
-            <UButton size="lg" v-else to="/pricing"> Choose a plan</UButton>
+            <UButton size="lg" v-else to="/pricing">{{ t('dashboard.billing.choosePlan') }}</UButton>
           </div>
         </div>
       </div>

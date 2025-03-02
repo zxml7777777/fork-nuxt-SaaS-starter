@@ -22,7 +22,7 @@ const { data: page, pending: pagePending } = await useAsyncData(route.path, () =
 );
 
 // 合并所有加载状态
-const isLoading = computed(() => (i18nPending.value || pagePending.value) && !isLanguageSwitching.value);
+const isLoading = computed(() => i18nPending.value || pagePending.value || isLanguageSwitching.value);
 
 // 页面加载完成时，重置全局状态
 onMounted(() => {
@@ -58,6 +58,9 @@ const { data: surround, pending: surroundPending } = await useAsyncData(`${route
     .findSurround(withoutTrailingSlash(route.path))
     .then(data => data || [])
 );
+
+// 处理surround可能为null的情况
+const safetyCheckedSurround = computed(() => surround.value || []);
 
 const headline = computed(() => page.value ? findPageHeadline(page.value) : '');
 function findPageHeadline(page: any): string {
@@ -122,7 +125,7 @@ if (page.value) {
           </div>
           <div class="mt-8 pb-24 prose prose-primary dark:prose-invert max-w-none">
             <ContentRenderer v-if="page?.body" :value="page" />
-            <DocsSurround :surround="surround" />
+            <DocsSurround :surround="safetyCheckedSurround" />
           </div>
         </div>
         <div class="lg:col-span-2 order-first lg:order-last"></div>
