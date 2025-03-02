@@ -22,46 +22,9 @@ const isLanguageSwitching = inject('isLanguageSwitching', ref(false));
 
 // 确保i18n资源已加载
 const { pending } = useAsyncData('pricing-i18n', async () => {
-  // 设置加载状态
-  isAppLoading.value = true;
-  
-  // 确保当前语言的翻译资源已加载
-  try {
-    // 预加载当前语言的pricing相关翻译
-    await Promise.all([
-      import(`../locales/${locale.value}.json`),
-      import(`../locales/components/${locale.value}/pricing.json`).catch(() => ({}))
-    ]);
-  } catch (error) {
-    console.error('Failed to load i18n resources:', error);
-  } finally {
-    // 等待DOM更新
-    await nextTick();
-    // 重置加载状态
-    isAppLoading.value = false;
-  }
-  
+  // 等待i18n资源加载完成
+  await nextTick();
   return true;
-});
-
-// 监听语言变化，确保新语言的资源被加载
-watch(locale, async (newLocale) => {
-  isLanguageSwitching.value = true;
-  
-  try {
-    // 预加载新语言的pricing相关翻译
-    await Promise.all([
-      import(`../locales/${newLocale}.json`),
-      import(`../locales/components/${newLocale}/pricing.json`).catch(() => ({}))
-    ]);
-  } catch (error) {
-    console.error('Failed to load i18n resources for new locale:', error);
-  } finally {
-    // 等待DOM更新
-    await nextTick();
-    // 重置语言切换状态
-    isLanguageSwitching.value = false;
-  }
 });
 
 // 页面加载完成时，重置全局状态

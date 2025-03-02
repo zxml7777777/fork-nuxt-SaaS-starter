@@ -161,7 +161,7 @@ export default defineNuxtConfig({
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
     detectBrowserLanguage: false,  // 完全禁用浏览器语言检测，避免重定向循环
-    lazy: true,
+    lazy: false,  // 改为false，确保服务器端预渲染时加载所有翻译
     pages: {
       'index': {
         en: '/',

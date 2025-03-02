@@ -1,30 +1,29 @@
 <template>
   <div class="language-switcher">
-    <UButton
-      v-for="locale in availableLocales"
-      :key="locale.code"
-      :variant="locale.code === currentLocale ? 'solid' : 'outline'"
-      :color="locale.code === currentLocale ? 'primary' : 'gray'"
-      size="sm"
-      class="mx-1 relative overflow-hidden"
-      @click="switchLanguage(locale.code)"
-      :disabled="isLanguageSwitching"
-    >
-      <span :key="locale.code" class="inline-flex items-center">
-        <span v-if="locale.code === 'en'" class="mr-1">🇺🇸</span>
-        <span v-else-if="locale.code === 'zh'" class="mr-1">🇨🇳</span>
-        {{ locale.name }}
-      </span>
-    </UButton>
+    <UDropdown :items="dropdownItems" :popper="{ placement: 'bottom-end' }">
+      <UButton
+        color="gray"
+        variant="ghost"
+        :loading="isLanguageSwitching"
+        :disabled="isLanguageSwitching"
+        class="flex items-center gap-1"
+      >
+        <span v-if="currentLocale === 'en'" class="mr-1">🇺🇸</span>
+        <span v-else-if="currentLocale === 'zh'" class="mr-1">🇨🇳</span>
+        <span>{{ currentLocaleName }}</span>
+        <UIcon name="i-heroicons-chevron-down-20-solid" class="ml-1" />
+      </UButton>
+    </UDropdown>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { DropdownItem } from '#ui/types'
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const router = useRouter()
 const localeCookie = useCookie('i18n_redirected')
-const { $preloadTranslations } = useNuxtApp()
+const nuxtApp = useNuxtApp()
 
 type LocaleCode = 'en' | 'zh'
 
@@ -35,6 +34,34 @@ const isLanguageSwitching = inject('isLanguageSwitching', ref(false))
 const currentLocale = computed(() => locale.value)
 const availableLocales = computed(() => (locales.value as any[]))
 
+// 获取当前语言的名称
+const currentLocaleName = computed(() => {
+  const current = availableLocales.value.find(l => l.code === currentLocale.value)
+  return current?.name || currentLocale.value
+})
+
+// 构建下拉菜单项
+const localeItems = computed(() => {
+  return availableLocales.value.map(loc => {
+    let icon = ''
+    if (loc.code === 'en') icon = '🇺🇸'
+    else if (loc.code === 'zh') icon = '🇨🇳'
+    
+    return {
+      label: loc.name,
+      icon,
+      click: () => switchLanguage(loc.code),
+      disabled: loc.code === currentLocale.value || isLanguageSwitching.value,
+      active: loc.code === currentLocale.value
+    }
+  })
+})
+
+// 格式化为UDropdown需要的格式
+const dropdownItems = computed<DropdownItem[][]>(() => {
+  return [localeItems.value as unknown as DropdownItem[]]
+})
+
 const switchLanguage = async (localeCode: string) => {
   if (localeCode === currentLocale.value) return
   
@@ -42,8 +69,14 @@ const switchLanguage = async (localeCode: string) => {
   isLanguageSwitching.value = true;
   
   try {
-    // 先加载新语言的翻译
-    await $preloadTranslations(localeCode);
+    // 先加载新语言的翻译，优先使用preloadTranslations，兼容preloadBaseTranslations
+    if (nuxtApp.$preloadTranslations) {
+      await nuxtApp.$preloadTranslations(localeCode);
+    } else if (nuxtApp.$preloadBaseTranslations) {
+      await nuxtApp.$preloadBaseTranslations(localeCode);
+    } else {
+      console.warn('No translation preload function available');
+    }
     
     // 保存语言设置到cookie
     localeCookie.value = localeCode;
@@ -99,7 +132,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.5rem 0;
 }
 
 @media (max-width: 640px) {

@@ -3,9 +3,10 @@ import CTA from "~/layouts/default/sections/CTA.vue";
 import Features from "~/layouts/default/sections/Features.vue";
 import Hero from "~/layouts/default/sections/Hero.vue";
 import PoweredBy from "~/layouts/default/sections/PoweredBy.vue";
+import { useI18n } from 'vue-i18n';
 
 const { seo } = useAppConfig();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 // 全局状态
 const isAppLoading = inject('isAppLoading', ref(false));

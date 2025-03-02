@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { useAppConfig, useHead, useSeoMeta, provide } from '#imports';
-import { useRuntimeConfig } from 'nuxt/app';
+import { useRuntimeConfig, useNuxtApp } from 'nuxt/app';
 import { provideHeadlessUseId, useId } from '#imports';
 import { useCookie } from 'nuxt/app';
 import { onMounted, computed, ref, watch } from 'vue';
@@ -13,6 +13,7 @@ const { seo } = useAppConfig();
 const publicConfig = useRuntimeConfig().public;
 const localeCookie = useCookie('i18n_redirected');
 const route = useRoute();
+const nuxtApp = useNuxtApp();
 
 // 全局状态
 const isAppLoading = ref(false);
@@ -24,86 +25,32 @@ type LocaleType = 'en' | 'zh';
 
 // 预加载语言资源函数
 const preloadLocaleResources = async (localeCode: LocaleType) => {
-  try {
-    // 检查URL中是否有reload参数，用于强制重新加载翻译文件
-    const forceReload = window.location.href.includes('reload=true');
-    const timestamp = new Date().getTime();
-    
-    // 清除可能的模块缓存
-    try {
-      // 尝试重置Vue I18n相关缓存
-      // 使用any类型绕过TypeScript类型检查
-      const win = window as any;
-      if (win.__VUE_I18N_FULL_INSTALL__) {
-        win.__VUE_I18N_FULL_INSTALL__ = false;
-        setTimeout(() => {
-          win.__VUE_I18N_FULL_INSTALL__ = true;
-        }, 0);
-      }
-    } catch (e) {
-      console.warn('Failed to reset Vue I18n:', e);
-    }
-    
-    // 预加载基本翻译文件 - 移除时间戳参数
-    try {
-      console.log(`Loading base locale file for ${localeCode}`);
-      // 尝试两种可能的路径
-      try {
-        const baseModule = await import(`~/i18n/locales/${localeCode}.json`);
-        console.log('Successfully loaded base locale file from i18n/locales path:', baseModule);
-      } catch (innerError) {
-        console.warn(`Failed to load from i18n/locales path, trying locales path...`);
-        const baseModule = await import(`~/locales/${localeCode}.json`);
-        console.log('Successfully loaded base locale file from locales path:', baseModule);
-      }
-    } catch (e) {
-      console.error(`Failed to load base locale file for ${localeCode}:`, e);
-    }
-    
-    // 尝试预加载组件翻译文件 - 移除时间戳参数
-    const componentFiles = [
-      'header', 'footer', 'dashboard', 'hero', 
-      'auth', 'features', 'pricing', 'faq'
-    ];
-    
-    console.log(`Loading component files for ${localeCode}...`);
-    await Promise.allSettled(
-      componentFiles.map(component => {
-        console.log(`Attempting to load component: ${component} for ${localeCode}`);
-        // 尝试两种可能的路径
-        return import(`~/i18n/locales/components/${localeCode}/${component}.json`)
-          .then(module => {
-            console.log(`Successfully loaded component from i18n path: ${component} for ${localeCode}`);
-            return module;
-          })
-          .catch((err) => {
-            console.warn(`Failed to load from i18n path, trying locales path for ${component}...`);
-            return import(`~/locales/components/${localeCode}/${component}.json`)
-              .then(module => {
-                console.log(`Successfully loaded component from locales path: ${component} for ${localeCode}`);
-                return module;
-              })
-              .catch((innerErr) => {
-                console.warn(`Failed to load component locale file ${component} for ${localeCode} from both paths:`, innerErr);
-                return {}; // 忽略不存在的文件
-              });
-          });
-      })
-    );
-    
-    // 如果是强制重新加载，清除URL中的reload参数
-    if (forceReload && window.history && window.history.replaceState) {
-      const cleanUrl = window.location.href
-        .replace(/[&?]reload=true/, '')
-        .replace(/[&?]_=\d+/, '')
-        .replace(/[&?]nocache=\d+/, '');
-      window.history.replaceState({}, document.title, cleanUrl);
-    }
-    
-    return true;
-  } catch (error) {
-    console.error(`Failed to preload resources for locale ${localeCode}:`, error);
-    return false;
+  // 检查URL中是否有reload参数，用于强制重新加载翻译文件
+  const forceReload = window.location.href.includes('reload=true');
+  
+  // 清除可能的模块缓存
+  // 尝试重置Vue I18n相关缓存
+  // 使用any类型绕过TypeScript类型检查
+  const win = window as any;
+  if (win.__VUE_I18N_FULL_INSTALL__) {
+    win.__VUE_I18N_FULL_INSTALL__ = false;
+    setTimeout(() => {
+      win.__VUE_I18N_FULL_INSTALL__ = true;
+    }, 0);
+  }
+  
+  // 使用插件提供的方法预加载所有翻译
+  if (nuxtApp.$preloadTranslations) {
+    await nuxtApp.$preloadTranslations(localeCode);
+  } else if (nuxtApp.$preloadBaseTranslations) {
+    // 兼容性处理，如果没有preloadTranslations函数，则使用preloadBaseTranslations
+    await nuxtApp.$preloadBaseTranslations(localeCode);
+  }
+  
+  // 如果是强制重新加载，清除URL中的reload参数
+  if (forceReload && window.history && window.history.replaceState) {
+    const url = window.location.href.replace(/[?&]reload=true/, '');
+    window.history.replaceState({}, document.title, url);
   }
 };
 
@@ -119,8 +66,6 @@ onMounted(async () => {
     // 优先使用cookie中保存的语言，如果没有则使用浏览器语言
     const detectedLocale = savedLocale || browserLocale;
     
-    console.log(`App mounted - Cookie locale: ${savedLocale}, Browser locale: ${browserLocale}, Current locale: ${locale.value}`);
-    
     // 检查URL中是否有语言参数
     const urlParams = new URLSearchParams(window.location.search);
     const urlLocale = urlParams.get('_locale') as LocaleType | null;
@@ -130,8 +75,6 @@ onMounted(async () => {
     
     // 只有当最终语言与当前语言不同时才切换
     if (finalLocale !== locale.value) {
-      console.log(`Switching locale on mount from ${locale.value} to ${finalLocale}`);
-      
       // 预加载语言资源
       await preloadLocaleResources(finalLocale);
       
@@ -157,8 +100,8 @@ onMounted(async () => {
       url.searchParams.delete('_ts');
       window.history.replaceState({}, document.title, url.toString());
     }
-  } catch (error) {
-    console.error('Error during language initialization:', error);
+  } catch {
+    // 错误处理
   } finally {
     // 重置加载状态
     isAppLoading.value = false;
@@ -173,8 +116,6 @@ onMounted(async () => {
 // 提供全局语言切换方法
 const switchLocale = async (code: LocaleType) => {
   if (code === locale.value) return;
-  
-  console.log(`Global switchLocale called with: ${code}`);
   
   // 设置语言切换状态
   isLanguageSwitching.value = true;
@@ -192,10 +133,8 @@ const switchLocale = async (code: LocaleType) => {
     
     // 更新HTML lang属性
     document.documentElement.setAttribute('lang', code);
-    
-    console.log(`Language switched successfully to: ${code}`);
-  } catch (error) {
-    console.error('Error during language switch:', error);
+  } catch {
+    // 错误处理
   } finally {
     // 延迟重置状态，确保DOM已更新
     setTimeout(() => {
@@ -232,9 +171,6 @@ const alternateUrls = computed(() => {
     pathWithoutLocale = path + '?' + query;
   }
   
-  console.log('Current path:', currentPath);
-  console.log('Path without locale:', pathWithoutLocale);
-  
   // 为每种语言生成URL
   (locales.value as any[]).forEach(loc => {
     const localeCode = loc.code as LocaleType;
@@ -253,8 +189,6 @@ const alternateUrls = computed(() => {
       hrefLang: localeIso,
       href: url
     });
-    
-    console.log(`Generated URL for ${localeCode}:`, url);
   });
   
   // 添加x-default
