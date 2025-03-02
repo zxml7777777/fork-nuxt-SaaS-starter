@@ -1,6 +1,6 @@
 <script setup>
 const { data: stars } = await useFetch(
-  "https://api.github.com/repos/devstack-be/nuxt-saas-stripe-starter",
+  "https://api.github.com/repos/zxml7777777/fork-nuxt-SaaS-starter",
   {
     pick: ["stargazers_count"],
   }

@@ -112,25 +112,57 @@ onMounted(async () => {
   // 设置加载状态
   isAppLoading.value = true;
   
-  const savedLocale = localeCookie.value as LocaleType;
-  const browserLocale = navigator.language.startsWith('zh') ? 'zh' : 'en';
-  const detectedLocale = savedLocale || browserLocale;
-  
-  // 检查URL中是否有强制重新加载的参数
-  const forceReload = window.location.href.includes('reload=true');
-  
-  // 如果检测到的语言与当前语言不同，或者需要强制重新加载，预加载并切换
-  if ((detectedLocale && detectedLocale !== locale.value) || forceReload) {
-    await preloadLocaleResources(detectedLocale || locale.value as LocaleType);
-    locale.value = detectedLocale || locale.value;
-    localeCookie.value = detectedLocale || locale.value;
-  } else {
-    // 预加载当前语言资源
-    await preloadLocaleResources(locale.value as LocaleType);
+  try {
+    const savedLocale = localeCookie.value as LocaleType;
+    const browserLocale = navigator.language.startsWith('zh') ? 'zh' : 'en';
+    
+    // 优先使用cookie中保存的语言，如果没有则使用浏览器语言
+    const detectedLocale = savedLocale || browserLocale;
+    
+    console.log(`App mounted - Cookie locale: ${savedLocale}, Browser locale: ${browserLocale}, Current locale: ${locale.value}`);
+    
+    // 检查URL中是否有语言参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlLocale = urlParams.get('_locale') as LocaleType | null;
+    
+    // 确定最终使用的语言：URL参数 > Cookie > 浏览器语言 > 当前语言
+    const finalLocale = urlLocale || detectedLocale || locale.value;
+    
+    // 只有当最终语言与当前语言不同时才切换
+    if (finalLocale !== locale.value) {
+      console.log(`Switching locale on mount from ${locale.value} to ${finalLocale}`);
+      
+      // 预加载语言资源
+      await preloadLocaleResources(finalLocale);
+      
+      // 设置当前语言
+      locale.value = finalLocale;
+      
+      // 保存到cookie (不使用document.cookie直接设置，避免重复设置)
+      if (!localeCookie.value || localeCookie.value !== finalLocale) {
+        localeCookie.value = finalLocale;
+      }
+      
+      // 更新HTML lang属性
+      document.documentElement.setAttribute('lang', finalLocale);
+    } else {
+      // 预加载当前语言资源
+      await preloadLocaleResources(locale.value as LocaleType);
+    }
+    
+    // 清除URL中的语言参数，避免刷新时重复处理
+    if (urlLocale && window.history && window.history.replaceState) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('_locale');
+      url.searchParams.delete('_ts');
+      window.history.replaceState({}, document.title, url.toString());
+    }
+  } catch (error) {
+    console.error('Error during language initialization:', error);
+  } finally {
+    // 重置加载状态
+    isAppLoading.value = false;
   }
-  
-  // 重置加载状态
-  isAppLoading.value = false;
   
   // 监听页面加载状态
   window.addEventListener('beforeunload', () => {
@@ -142,22 +174,34 @@ onMounted(async () => {
 const switchLocale = async (code: LocaleType) => {
   if (code === locale.value) return;
   
+  console.log(`Global switchLocale called with: ${code}`);
+  
   // 设置语言切换状态
   isLanguageSwitching.value = true;
   
-  // 预加载新语言资源
-  await preloadLocaleResources(code);
-  
-  // 设置当前语言
-  locale.value = code;
-  
-  // 保存语言设置到cookie
-  localeCookie.value = code;
-  
-  // 延迟重置状态，确保DOM已更新
-  setTimeout(() => {
-    isLanguageSwitching.value = false;
-  }, 300);
+  try {
+    // 预加载新语言资源
+    await preloadLocaleResources(code);
+    
+    // 设置当前语言
+    locale.value = code;
+    
+    // 保存语言设置到cookie (设置长期有效的cookie)
+    localeCookie.value = code;
+    document.cookie = `i18n_redirected=${code}; path=/; max-age=31536000; SameSite=Lax`;
+    
+    // 更新HTML lang属性
+    document.documentElement.setAttribute('lang', code);
+    
+    console.log(`Language switched successfully to: ${code}`);
+  } catch (error) {
+    console.error('Error during language switch:', error);
+  } finally {
+    // 延迟重置状态，确保DOM已更新
+    setTimeout(() => {
+      isLanguageSwitching.value = false;
+    }, 300);
+  }
 };
 
 // 提供给所有组件使用
@@ -177,9 +221,19 @@ const alternateUrls = computed(() => {
   
   // 获取不带语言前缀的路径
   let pathWithoutLocale = currentPath;
-  if (locale.value === 'zh' && currentPath.startsWith('/zh')) {
+  
+  // 修复：正确处理中文路径前缀
+  if (currentPath.startsWith('/zh')) {
+    // 移除/zh前缀，保留其余部分
     pathWithoutLocale = currentPath.substring(3) || '/';
+  } else if (currentPath.includes('?')) {
+    // 处理带查询参数的路径
+    const [path, query] = currentPath.split('?');
+    pathWithoutLocale = path + '?' + query;
   }
+  
+  console.log('Current path:', currentPath);
+  console.log('Path without locale:', pathWithoutLocale);
   
   // 为每种语言生成URL
   (locales.value as any[]).forEach(loc => {
@@ -189,7 +243,7 @@ const alternateUrls = computed(() => {
     
     if (localeCode === 'en') {
       // 英文是默认语言，不添加前缀
-      url += pathWithoutLocale;
+      url += pathWithoutLocale === '/' ? '' : pathWithoutLocale;
     } else {
       // 非默认语言添加前缀
       url += `/zh${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
@@ -199,12 +253,14 @@ const alternateUrls = computed(() => {
       hrefLang: localeIso,
       href: url
     });
+    
+    console.log(`Generated URL for ${localeCode}:`, url);
   });
   
   // 添加x-default
   urls.push({
     hrefLang: 'x-default',
-    href: `${baseUrl}${pathWithoutLocale}`
+    href: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
   });
   
   return urls;

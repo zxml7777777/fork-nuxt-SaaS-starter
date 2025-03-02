@@ -24,6 +24,7 @@ const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const router = useRouter()
 const localeCookie = useCookie('i18n_redirected')
+const { $preloadTranslations } = useNuxtApp()
 
 type LocaleCode = 'en' | 'zh'
 
@@ -38,73 +39,59 @@ const switchLanguage = async (localeCode: string) => {
   if (localeCode === currentLocale.value) return
   
   console.log(`Switching language to: ${localeCode}`);
+  isLanguageSwitching.value = true;
   
   try {
-    // 手动预加载语言文件
-    if (localeCode === 'zh') {
-      console.log('Manually preloading Chinese language files');
-      try {
-        // 加载基本翻译文件
-        const baseModule = await import(`~/i18n/locales/zh.json`);
-        console.log('Successfully loaded zh.json:', baseModule);
-        
-        // 加载组件翻译文件
-        const componentFiles = [
-          'header', 'footer', 'dashboard', 'hero', 
-          'auth', 'features', 'pricing', 'faq'
-        ];
-        
-        await Promise.all(
-          componentFiles.map(component => 
-            import(`~/i18n/locales/components/zh/${component}.json`)
-              .then(module => {
-                console.log(`Successfully loaded component: ${component} for zh`);
-                return module;
-              })
-              .catch(err => {
-                console.warn(`Failed to load component: ${component} for zh:`, err);
-                return {};
-              })
-          )
-        );
-      } catch (e) {
-        console.error('Failed to manually preload Chinese language files:', e);
-      }
-    }
-    
-    // 设置当前语言
-    locale.value = localeCode as LocaleCode
+    // 先加载新语言的翻译
+    await $preloadTranslations(localeCode);
     
     // 保存语言设置到cookie
-    localeCookie.value = localeCode
+    localeCookie.value = localeCode;
+    
+    // 然后切换语言
+    locale.value = localeCode as LocaleCode;
     
     // 使用全局语言切换方法
     if (globalSwitchLocale) {
       console.log('Using global switchLocale method');
-      await globalSwitchLocale(localeCode as LocaleCode)
+      await globalSwitchLocale(localeCode as LocaleCode);
     }
     
     // 获取当前路由对应的本地化路径
-    const path = switchLocalePath(localeCode as LocaleCode)
+    const path = switchLocalePath(localeCode as LocaleCode);
+    console.log('Current route:', router.currentRoute.value.fullPath);
+    console.log('Localized path from switchLocalePath:', path);
+    
     if (path) {
       console.log(`Navigating to localized path: ${path}`);
       
-      // 添加时间戳参数，强制浏览器重新请求资源，避免缓存问题
-      const timestamp = new Date().getTime()
-      const separator = path.includes('?') ? '&' : '?'
+      // 添加强制刷新参数，避免hydration mismatch
+      const navigatePath = path + (path.includes('?') ? '&' : '?') + '_ts=' + Date.now();
+      console.log(`Final navigation path with timestamp: ${navigatePath}`);
       
-      // 使用硬刷新方式切换语言，确保所有浏览器都能正确加载翻译文件
-      const finalPath = `${path}${separator}reload=true&nocache=${timestamp}`;
-      
-      console.log(`Final navigation path with reload: ${finalPath}`);
-      
-      // 使用location.replace而不是location.href，避免在历史记录中创建多余的条目
-      window.location.replace(finalPath);
+      // 强制刷新页面以确保导航数据重新加载
+      window.location.href = navigatePath;
+    } else {
+      console.warn('No localized path found, reloading page');
+      // 如果没有找到本地化路径，尝试刷新页面
+      window.location.href = window.location.pathname + 
+        (window.location.pathname.includes('?') ? '&' : '?') + 
+        '_locale=' + localeCode + '&_ts=' + Date.now();
     }
   } catch (error) {
     console.error('Error during language switch:', error);
+  } finally {
+    isLanguageSwitching.value = false;
   }
 }
+
+// 组件挂载时确保cookie和当前语言一致
+onMounted(() => {
+  if (localeCookie.value && localeCookie.value !== locale.value) {
+    console.log(`Cookie language (${localeCookie.value}) differs from current (${locale.value}), updating locale`);
+    locale.value = localeCookie.value as LocaleCode;
+  }
+});
 </script>
 
 <style scoped>

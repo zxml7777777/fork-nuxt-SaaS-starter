@@ -1,14 +1,35 @@
 <script setup lang="ts">
-import type { NavItem } from "@nuxt/content";
+import type { NavItem } from '@nuxt/content/dist/runtime/types';
 import Header from "./docs/Header.vue";
 import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
-const { data: navigation } = await useAsyncData<NavItem[]>("navigation", () =>
-  fetchContentNavigation()
-);
-const navigationItems =
-  navigation.value && navigation.value.length > 0
-    ? (navigation.value[0].children as NavItem[])
-    : [];
+
+const { locale } = useI18n();
+
+// 使用 ref 和 computed 使导航数据对语言变化做出反应
+const navigationData = ref<NavItem[] | null>(null);
+const navigationItems = computed(() => {
+  if (navigationData.value && navigationData.value.length > 0) {
+    return navigationData.value[0].children as NavItem[];
+  }
+  return [] as NavItem[];
+});
+
+// 加载导航数据的函数
+const loadNavigation = async () => {
+  const { data } = await useAsyncData<NavItem[]>(
+    `navigation-${locale.value}`, // 使用带有语言的键，确保每次语言变化时都重新获取
+    () => fetchContentNavigation(queryContent(locale.value === 'zh' ? '/zh' : '/'))
+  );
+  navigationData.value = data.value;
+};
+
+// 初始加载
+await loadNavigation();
+
+// 监听语言变化，重新加载导航
+watch(locale, async () => {
+  await loadNavigation();
+}, { immediate: false });
 
 provide("navigation", navigationItems);
 useHead({

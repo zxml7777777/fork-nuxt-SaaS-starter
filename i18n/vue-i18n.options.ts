@@ -10,6 +10,10 @@ export default defineI18nConfig(() => {
     silentTranslationWarn: process.env.NODE_ENV === 'production',
     missingWarn: process.env.NODE_ENV !== 'production',
     fallbackWarn: process.env.NODE_ENV !== 'production',
+    // 添加调试选项
+    debug: process.env.NODE_ENV !== 'production',
+    // 禁用组合式API缓存
+    compositionOnly: false,
     // 添加自定义加载器选项
     datetimeFormats: {
       'en': {

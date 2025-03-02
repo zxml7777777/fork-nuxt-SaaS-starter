@@ -1,0 +1,54 @@
+{
+  "title": "Getting Started",
+  "introduction": {
+    "title": "Introduction",
+    "description": "Welcome to Nuxt SaaS Starter template documentation.",
+    "content": "Nuxt SaaS Starter is a **open source boilerplate** and will help you to create your own SaaS website with Nuxt.js. It is built with Nuxt 3, Nuxt UI and Nuxt Content. It is a perfect starting point for your next project.",
+    "inspiration": "This template is inspired by:",
+    "resource": "This documentation is your go-to resource for configuring and using the starter effectively.",
+    "start": "Let's get started and happy coding!"
+  },
+  "stack": {
+    "title": "Stack",
+    "items": [
+      "Nuxt 3",
+      "Prisma ORM",
+      "Sidebase Auth",
+      "Nuxt UI - TailwindCSS",
+      "Nuxt Content",
+      "Stripe"
+    ]
+  },
+  "features": {
+    "title": "Features",
+    "items": [
+      "Public website with pricing and marketing pages",
+      "Authentication with Sidebase Auth",
+      "Subscription management with Stripe",
+      "Write content with MDC syntax thanks to Nuxt Content",
+      "Beautiful Typography styles",
+      "And more..."
+    ]
+  },
+  "github": {
+    "title": "Github Repository",
+    "description": "Feel free to contribute to the project on GitHub.",
+    "button": "View on GitHub"
+  },
+  "installation": {
+    "title": "Installation",
+    "description": "How to install Nuxt SaaS Starter.",
+    "quickStart": {
+      "title": "Quick Start - New project",
+      "description": "You can start a fresh new project by cloning the repository from GitHub. Run the following command in your terminal:",
+      "clone": "Clone the repository",
+      "goToProject": "Go to the project directory:",
+      "installDependencies": "Install the dependencies:",
+      "createEnv": "Create a `.env` file in the root directory or copy/paste the `.env.example` file"
+    },
+    "configuration": {
+      "title": "Configuration",
+      "description": "Let's check the configuration part for update all environment variables before use `pnpm run dev`"
+    }
+  }
+} 

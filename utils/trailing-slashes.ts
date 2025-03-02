@@ -27,12 +27,18 @@ export function withoutTrailingSlash(
     fragment = input.slice(fragmentIndex);
   }
 
-  const [basePath, ...queryParts] = path.split("?");
-  const cleanPath = basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
+  // 处理查询参数
+  let queryString = "";
+  const queryIndex = path.indexOf("?");
+  if (queryIndex >= 0) {
+    queryString = path.slice(queryIndex);
+    path = path.slice(0, queryIndex);
+  }
 
-  return `${cleanPath || "/"}${
-    queryParts.length > 0 ? `?${queryParts.join("?")}` : ""
-  }${fragment}`;
+  const cleanPath = path.endsWith("/") ? path.slice(0, -1) : path;
+  
+  // 直接返回清理后的路径加上原始查询字符串
+  return `${cleanPath || "/"}${queryString}${fragment}`;
 }
 
 /**

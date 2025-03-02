@@ -1,0 +1,34 @@
+{
+  "title": "配置",
+  "ui": {
+    "sections": {
+      "authentication": "身份验证",
+      "database": "数据库",
+      "email": "电子邮件",
+      "subscriptions": "订阅",
+      "appConfig": "应用配置",
+      "introduction": "介绍",
+      "authentification": "认证",
+      "config": "配置"
+    },
+    "navigation": {
+      "next": "下一步",
+      "previous": "上一步"
+    },
+    "toc": {
+      "title": "目录"
+    },
+    "codeBlock": {
+      "copy": "复制",
+      "copied": "已复制"
+    }
+  },
+  "navigation": {
+    "introduction": "介绍",
+    "authentification": "认证",
+    "database": "数据库",
+    "email": "电子邮件",
+    "subscriptions": "订阅",
+    "config": "配置"
+  }
+} 

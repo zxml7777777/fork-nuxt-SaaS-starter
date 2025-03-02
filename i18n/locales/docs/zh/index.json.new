@@ -1,0 +1,21 @@
+﻿{
+  "title": "文档",
+  "description": "Nuxt SaaS Starter 文档",
+  "navigation": {
+    "gettingStarted": "入门",
+    "configuration": "配置"
+  },
+  "sidebar": {
+    "title": "文档",
+    "search": "搜索文档...",
+    "links": {
+      "home": "首页",
+      "pricing": "定价",
+      "dashboard": "控制台"
+    }
+  },
+  "content": {
+    "notFound": "找不到页面",
+    "backHome": "返回首页"
+  }
+} 

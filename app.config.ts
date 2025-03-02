@@ -8,7 +8,9 @@ export default defineAppConfig({
     description: "Build and deploy your Nuxt SaaS within minutes",
     logo: "/logo.svg",
     social: {
-      github: "https://github.com/devstack-be/nuxt-saas-stripe-starter",
+      twitter: "https://twitter.com",
+      github: "https://github.com/zxml7777777/fork-nuxt-SaaS-starter",
+      discord: "https://discord.com",
     },
   },
   seo: {
@@ -29,9 +31,9 @@ export default defineAppConfig({
       },
       {
         icon: "i-simple-icons-github",
-        to: "https://github.com/devstack-be/nuxt-saas-stripe-starter",
+        to: "https://github.com/zxml7777777/fork-nuxt-SaaS-starter",
         target: "_blank",
-        "aria-label": "Nuxt SaaS Starter GitHub",
+        "aria-label": "Nuxt SaaS Starter on GitHub",
       },
     ],
   },

@@ -24,7 +24,7 @@ Let's get started and happy coding!
 - You can start a fresh new project by cloning the repository from GitHub. Run the following command in your terminal
 
 ```bash
-git clone https://github.com/devstack-be/nuxt-saas-stripe-starter
+git clone https://github.com/zxml7777777/fork-nuxt-SaaS-starter
 ```
 
 - Or, deploy with Vercel:
@@ -103,13 +103,13 @@ pnpm run dev
 
 ## Author
 
-Created by [@devstack-be](https://www.devstack.be) in 2024, released under the [MIT license](https://github.com/devstack-be/nuxt-saas-stripe-starter/blob/main/LICENSE.md).
+Created by [@devstack-be](https://www.devstack.be) in 2024, released under the [MIT license](https://github.com/zxml7777777/fork-nuxt-SaaS-starter/blob/main/LICENSE.md).
 
 ## Credits
 
 This project was inspired by [Next SaaS Stripe Starter](https://github.com/mickasmt/next-saas-stripe-starter)
 
-This project was also inspired by shadcn's [Taxonomy](https://github.com/shadcn-ui/taxonomy), Steven Tey’s [Precedent](https://github.com/steven-tey/precedent), and Antonio Erdeljac's [Next 13 AI SaaS](https://github.com/AntonioErdeljac/next13-ai-saas).
+This project was also inspired by shadcn's [Taxonomy](https://github.com/shadcn-ui/taxonomy), Steven Tey's [Precedent](https://github.com/steven-tey/precedent), and Antonio Erdeljac's [Next 13 AI SaaS](https://github.com/AntonioErdeljac/next13-ai-saas).
 
 - Shadcn ([@shadcn](https://twitter.com/shadcn))
 - Steven Tey ([@steventey](https://twitter.com/steventey))

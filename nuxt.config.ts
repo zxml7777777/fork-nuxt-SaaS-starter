@@ -73,6 +73,10 @@ export default defineNuxtConfig({
     strict: true,
   },
 
+  plugins: [
+    '~/plugins/i18n-loader.ts'
+  ],
+
   runtimeConfig: {
     // The private keys which are only available within server-side
     AuthSecret: "",
@@ -127,7 +131,10 @@ export default defineNuxtConfig({
           'components/en/auth.json',
           'components/en/features.json',
           'components/en/pricing.json',
-          'components/en/faq.json'
+          'components/en/faq.json',
+          'docs/en/index.json',
+          'docs/en/getting-started.json',
+          'docs/en/configuration.json'
         ],
         name: 'English' 
       },
@@ -143,40 +150,39 @@ export default defineNuxtConfig({
           'components/zh/auth.json',
           'components/zh/features.json',
           'components/zh/pricing.json',
-          'components/zh/faq.json'
+          'components/zh/faq.json',
+          'docs/zh/index.json',
+          'docs/zh/getting-started.json',
+          'docs/zh/configuration.json'
         ],
         name: '中文' 
       }
     ],
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      cookieDomain: null,
-      cookieSecure: process.env.NODE_ENV === 'production',
-      cookieCrossOrigin: true,
-      redirectOn: 'root',
-      alwaysRedirect: true
-    },
+    detectBrowserLanguage: false,  // 完全禁用浏览器语言检测，避免重定向循环
     lazy: true,
     pages: {
       'index': {
         en: '/',
-        zh: '/'
+        zh: '/zh'
       },
       'dashboard/index': {
         en: '/dashboard',
-        zh: '/dashboard'
+        zh: '/dashboard' // 移除重复的zh路径
       },
       'pricing': {
         en: '/pricing',
-        zh: '/pricing'
+        zh: '/pricing' // 移除重复的zh路径
       }
     },
     customRoutes: 'config',
     vueI18n: './i18n/vue-i18n.options.ts',
-    skipSettingLocaleOnNavigate: false
+    skipSettingLocaleOnNavigate: true,  // 导航时不重置语言设置
+    compilation: {
+      strictMessage: false,      // 不严格检查消息格式
+      escapeHtml: false          // 不转义HTML
+    }
   },
 
   site: {
@@ -195,15 +201,7 @@ export default defineNuxtConfig({
       seo: true,
       routesNameSeparator: '___',
       strategy: 'prefix_except_default',
-      detectBrowserLanguage: {
-        useCookie: true,
-        cookieKey: 'i18n_redirected',
-        cookieDomain: null,
-        cookieSecure: process.env.NODE_ENV === 'production',
-        cookieCrossOrigin: true,
-        redirectOn: 'root',
-        alwaysRedirect: true
-      }
+      detectBrowserLanguage: false  // 同样禁用site配置中的浏览器语言检测
     }
   },
 });

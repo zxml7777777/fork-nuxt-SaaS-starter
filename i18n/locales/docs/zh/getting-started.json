@@ -1,0 +1,19 @@
+{
+  "title": "入门",
+  "ui": {
+    "github": {
+      "title": "Github 仓库",
+      "button": "在 GitHub 上查看"
+    },
+    "navigation": {
+      "next": "下一步",
+      "previous": "上一步"
+    },
+    "toc": {
+      "title": "目录"
+    }
+  },
+  "navigation": {
+    "introduction": "介绍"
+  }
+} 

@@ -1,0 +1,21 @@
+{
+  "title": "Documentation",
+  "description": "Nuxt SaaS Starter Documentation",
+  "navigation": {
+    "gettingStarted": "Getting Started",
+    "configuration": "Configuration"
+  },
+  "sidebar": {
+    "title": "Documentation",
+    "search": "Search documentation...",
+    "links": {
+      "home": "Home",
+      "pricing": "Pricing",
+      "dashboard": "Dashboard"
+    }
+  },
+  "content": {
+    "notFound": "Page not found",
+    "backHome": "Back to home"
+  }
+} 

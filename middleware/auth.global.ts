@@ -14,6 +14,17 @@ export default defineNuxtRouteMiddleware((to, _from) => {
   );
   const isGuestRoute = guestOnlyRoutes.includes(to.path);
 
+  // 检查是否是定价页面、文档页面或主页
+  const isPublicPage = 
+    to.path === "/pricing" || 
+    to.path === "/" || 
+    to.path === "/zh/pricing" || 
+    to.path === "/zh" ||
+    to.path === "/docs" ||
+    to.path === "/zh/docs" ||
+    to.path.startsWith("/docs/") ||
+    to.path.startsWith("/zh/docs/");
+
   // Vérifier si la route existe
   const routeExists = to.matched.length > 0;
 
@@ -27,6 +38,9 @@ export default defineNuxtRouteMiddleware((to, _from) => {
   if (isGuestRoute && isLoggedIn) {
     return navigateTo(DEFAULT_LOGGED_IN_REDIRECT);
   }
+
+  // 如果是公共页面（定价页面、文档页面或主页），允许未登录用户访问，不进行重定向
+  if (isPublicPage) return;
 
   // Redirect to / if user is not authenticated and route is not public
   if (!isLoggedIn && !isPublicRoute) {

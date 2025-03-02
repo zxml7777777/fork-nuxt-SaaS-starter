@@ -1,0 +1,124 @@
+{
+  "title": "Configuration",
+  "authentication": {
+    "title": "Authentication",
+    "description": "Configure the authentication with Sidebase Auth.",
+    "note": "You can check out the official **Sidebase Auth** documentation for more information.",
+    "appUrl": {
+      "title": "Application URL",
+      "description": "Before configuring the authentication, you need to set the `NUXT_APP_URL` environment variable in your `.env` file. For example in development, you can set the URL to `http://localhost:3000`."
+    },
+    "authSecret": {
+      "title": "Auth Secret environment variable",
+      "description": "To configure the authentication with Sidebase Auth, you need to set the `NUXT_AUTH_SECRET` environment variable in your `.env` file.",
+      "generate": {
+        "title": "Generate a secret key",
+        "description": "You can generate a secret key using `openssl` CLI with the following command:",
+        "or": "Or use this online tool to generate a secret key"
+      }
+    },
+    "authOrigin": {
+      "title": "Auth Origin",
+      "description": "For production only, you also need to set the `AUTH_ORIGIN` environment variable in your `.env` file."
+    },
+    "googleProvider": {
+      "title": "Google Provider",
+      "description": "To enable the Google provider, you need to set the `NUXT_GOOGLE_CLIENT_ID` and `NUXT_GOOGLE_CLIENT_SECRET` environment variables in your `.env` file.",
+      "getCredentials": {
+        "title": "Get the Google Client ID and Client Secret",
+        "steps": [
+          "Go to the Google Developers Console.",
+          "Create a new project or select an existing project.",
+          "Go to the `Credentials` tab.",
+          "Click on `Create credentials` and select `OAuth client ID`.",
+          "Select `Web application` as the application type.",
+          "Add your authorized JavaScript origins and redirect URIs."
+        ],
+        "origins": "Authorized JavaScript origins is your `{NUXT_PUBLIC_APP_URL}`",
+        "redirects": "Authorized redirect URIs is your `{NUXT_PUBLIC_APP_URL}/api/auth/callback/google`",
+        "copy": "Copy the `Client ID` and `Client Secret` and paste them into your `.env` file."
+      }
+    }
+  },
+  "database": {
+    "title": "Database",
+    "description": "Configure the database with Prisma.",
+    "note": "You can check out the official **Prisma** documentation for more information.",
+    "connection": {
+      "title": "Database connection",
+      "description": "To configure the database connection, you need to set the `DATABASE_URL` environment variable in your `.env` file."
+    },
+    "neon": {
+      "title": "Neon database",
+      "description": "This template uses Neon as PostgreSQL database. You can create a free account on Neon website.",
+      "steps": [
+        "Create a new project",
+        "Copy the connection string",
+        "Paste the connection string into your `.env` file"
+      ]
+    }
+  },
+  "email": {
+    "title": "Email",
+    "description": "Configure the email with Resend.",
+    "note": "You can check out the official **Resend** documentation for more information.",
+    "apiKey": {
+      "title": "API key",
+      "description": "To configure the email, you need to set the `NUXT_RESEND_API_KEY` environment variable in your `.env` file."
+    },
+    "domain": {
+      "title": "Domain",
+      "description": "You also need to set the `NUXT_EMAIL_FROM` environment variable in your `.env` file."
+    }
+  },
+  "subscriptions": {
+    "title": "Subscriptions",
+    "description": "Configure the subscriptions with Stripe.",
+    "note": "You can check out the official **Stripe** documentation for more information.",
+    "apiKeys": {
+      "title": "API keys",
+      "description": "To configure Stripe, you need to set the `NUXT_STRIPE_SECRET_KEY` and `NUXT_STRIPE_WEBHOOK_SECRET` environment variables in your `.env` file."
+    },
+    "products": {
+      "title": "Products and prices",
+      "description": "You need to create products and prices in the Stripe dashboard.",
+      "steps": [
+        "Create a product",
+        "Create a price for each product",
+        "Copy the price ID",
+        "Paste the price ID into the `app.config.ts` file"
+      ]
+    },
+    "webhook": {
+      "title": "Webhook",
+      "description": "You need to create a webhook in the Stripe dashboard.",
+      "steps": [
+        "Go to the Webhook tab",
+        "Click on `Add endpoint`",
+        "Enter your webhook URL",
+        "Select the events",
+        "Click on `Add endpoint`"
+      ],
+      "events": [
+        "customer.subscription.created",
+        "customer.subscription.updated",
+        "customer.subscription.deleted"
+      ]
+    }
+  },
+  "appConfig": {
+    "title": "App config",
+    "description": "Configure the app settings.",
+    "file": "You can configure the app settings in the `app.config.ts` file.",
+    "settings": [
+      "Site name",
+      "Site description",
+      "Site URL",
+      "Site favicon",
+      "Site logo",
+      "Site colors",
+      "Site fonts",
+      "Site language"
+    ]
+  }
+} 
