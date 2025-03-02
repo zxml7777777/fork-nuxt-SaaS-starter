@@ -1,0 +1,12 @@
+{
+  "title": "准备好开启创新之旅了吗？",
+  "description": "立即注册Nova，在几分钟内开始创建令人惊叹的应用。",
+  "buttons": {
+    "auth": {
+      "dashboard": "进入控制台"
+    },
+    "guest": {
+      "pricing": "了解更多"
+    }
+  }
+} 

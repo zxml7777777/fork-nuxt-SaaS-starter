@@ -1,4 +1,4 @@
-{
+﻿{
     "nav": {
       "pricing": "定价",
       "docs": "文档",
@@ -46,5 +46,59 @@
     },
     "common": {
       "error": "错误"
+    },
+    "components": {
+      "sections": {
+        "features": {
+          "title": "创新科技",
+          "subtitle": "重新定义应用开发体验",
+          "description": "Nova提供极致简约而强大的平台，让您的创意以前所未有的速度成为现实。",
+          "items": [
+            {
+              "title": "优雅设计",
+              "description": "简约而不简单的界面设计，为您的创意提供完美展示。",
+              "icon": "i-simple-icons-apple"
+            },
+            {
+              "title": "闪电部署",
+              "description": "一键部署应用到云端，无需复杂配置。",
+              "icon": "i-simple-icons-vercel"
+            },
+            {
+              "title": "无缝集成",
+              "description": "与您喜爱的工具和服务完美融合，提升工作效率。",
+              "icon": "i-simple-icons-figma"
+            },
+            {
+              "title": "卓越性能",
+              "description": "强大的性能支持，轻松应对数百万用户访问。",
+              "icon": "i-simple-icons-amazonaws"
+            }
+          ]
+        },
+        "cta": {
+          "title": "准备好开启创新之旅了吗？",
+          "description": "立即注册Nova，在几分钟内开始创建令人惊叹的应用。",
+          "buttons": {
+            "auth": {
+              "dashboard": "进入控制台"
+            },
+            "guest": {
+              "pricing": "了解更多"
+            }
+          }
+        },
+        "poweredby": {
+          "title": "技术支持"
+        },
+        "footer": {
+          "credits": "Nova © 2024. 保留所有权利。",
+          "navigation": [
+            { "name": "选购", "href": "/pricing" },
+            { "name": "支持", "href": "/docs" },
+            { "name": "隐私", "href": "/privacy" }
+          ]
+        }
+      }
     }
   }

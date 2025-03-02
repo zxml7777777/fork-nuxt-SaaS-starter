@@ -1,6 +1,7 @@
 <script setup>
 const { CTA } = useAppConfig();
 const { status: authStatus } = useAuth();
+const { t } = useI18n();
 </script>
 <template>
   <div class="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
@@ -10,24 +11,24 @@ const { status: authStatus } = useAuth();
       <h2
         class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl"
       >
-        {{ CTA.title }}
+        {{ t('components.sections.cta.title') }}
       </h2>
       <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
-        {{ CTA.description }}
+        {{ t('components.sections.cta.description') }}
       </p>
       <div class="mt-10 flex items-center justify-center gap-x-6">
         <template v-if="authStatus === 'authenticated'">
           <UButton
             v-for="(button, index) of CTA?.buttons?.auth"
             :key="index"
-            v-bind="{ ...button }"
+            v-bind="{ ...button, label: t('components.sections.cta.buttons.auth.dashboard') }"
           />
         </template>
         <template v-else>
           <UButton
             v-for="(button, index) of CTA?.buttons?.guest"
             :key="index"
-            v-bind="{ ...button }"
+            v-bind="{ ...button, label: t('components.sections.cta.buttons.guest.pricing') }"
           />
         </template>
       </div>

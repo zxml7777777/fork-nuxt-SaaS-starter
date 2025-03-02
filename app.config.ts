@@ -1,11 +1,11 @@
 export default defineAppConfig({
   ui: {
-    primary: "indigo",
-    gray: "neutral",
+    primary: "zinc",
+    gray: "slate",
   },
   site: {
-    name: "Nuxt SaaS Starter",
-    description: "Build and deploy your Nuxt SaaS within minutes",
+    name: "Nova",
+    description: "设计与性能的完美融合",
     logo: "/logo.svg",
     social: {
       twitter: "https://twitter.com",
@@ -14,13 +14,14 @@ export default defineAppConfig({
     },
   },
   seo: {
-    siteName: "Nuxt SaaS Starter",
+    siteName: "Nova",
   },
   footer: {
-    credits: "Devstack © 2024. All rights reserved.",
+    credits: "Nova © 2024. 保留所有权利。",
     navigation: [
-      { name: "Pricing", href: "/pricing" },
-      { name: "Docs", href: "/docs" },
+      { name: "选购", href: "/pricing" },
+      { name: "支持", href: "/docs" },
+      { name: "隐私", href: "/privacy" },
     ],
     links: [
       {
@@ -39,18 +40,18 @@ export default defineAppConfig({
   },
   subscriptions: {
     frequencies: [
-      { value: "monthly", label: "Monthly", default: true },
-      { value: "yearly", label: "Yearly (-20%)" },
+      { value: "monthly", label: "月付", default: true },
+      { value: "yearly", label: "年付（节省20%）" },
     ],
-    currency: "USD",
+    currency: "CNY",
     plans: [
       {
-        title: "Starter",
-        description: "For Beginners",
+        title: "Nova",
+        description: "基础体验",
         benefits: [
-          "Up to 100 monthly posts",
-          "Basic analytics and reporting",
-          "Access to standard templates",
+          "简洁直观的用户界面",
+          "基础数据分析",
+          "标准模板库",
         ],
         prices: {
           monthly: 0,
@@ -63,18 +64,18 @@ export default defineAppConfig({
       },
       {
         mostPopular: true,
-        title: "Pro",
-        description: "Unlock Advanced Features",
+        title: "Nova Pro",
+        description: "专业创作体验",
         benefits: [
-          "Up to 500 monthly posts",
-          "Advanced analytics and reporting",
-          "Access to business templates",
-          "Priority customer support",
-          "Exclusive webinars and training.",
+          "高级用户界面定制",
+          "详细数据分析与报告",
+          "专业模板库",
+          "优先技术支持",
+          "专属培训资源",
         ],
         prices: {
-          monthly: 15,
-          yearly: 144,
+          monthly: 99,
+          yearly: 999,
         },
         stripeIds: {
           monthly: "",
@@ -82,18 +83,18 @@ export default defineAppConfig({
         },
       },
       {
-        title: "Business",
-        description: "For Power Users",
+        title: "Nova Max",
+        description: "无限创作可能",
         benefits: [
-          "Unlimited posts",
-          "Real-time analytics and reporting",
-          "Access to all templates, including custom branding",
-          "24/7 business customer support",
-          "Personalized onboarding and account management.",
+          "完全无限制使用",
+          "实时数据分析",
+          "独家定制模板",
+          "24/7专属客户支持",
+          "个性化入职培训",
         ],
         prices: {
-          monthly: 30,
-          yearly: 300,
+          monthly: 199,
+          yearly: 1999,
         },
         stripeIds: {
           monthly: "",
@@ -103,19 +104,19 @@ export default defineAppConfig({
     ],
   },
   pricing: {
-    title: "Pricing",
-    subtitle: "Pricing plans for teams of all sizes",
+    title: "选购方案",
+    subtitle: "为您的创意提供最佳支持",
     description:
-      "Choose an affordable plan that's packed with the best features for engaging your audience, creating customer loyalty, and driving sales.",
+      "选择一个适合您需求的方案，体验卓越设计与强大功能的完美结合。",
   },
   CTA: {
-    title: "Ready to get started?",
+    title: "准备好开启创新之旅了吗？",
     description:
-      "Sign up for Devstack today and start building beautiful web applications in minutes.",
+      "立即注册Nova，在几分钟内开始创建令人惊叹的应用。",
     buttons: {
       auth: [
         {
-          label: "Dashboard",
+          label: "进入控制台",
           to: "/dashboard",
           size: "lg",
           icon: "i-heroicons-arrow-right",
@@ -124,7 +125,7 @@ export default defineAppConfig({
       ],
       guest: [
         {
-          label: "See our pricings",
+          label: "了解更多",
           to: "/pricing",
           size: "lg",
           icon: "i-heroicons-arrow-right",
@@ -134,57 +135,57 @@ export default defineAppConfig({
     },
   },
   features: {
-    title: "Deploy faster",
-    subtitle: "Everything you need to deploy your app",
+    title: "创新科技",
+    subtitle: "重新定义应用开发体验",
     description:
-      "Devstack is a full-featured platform that helps you build and deploy web applications in a matter of minutes.",
+      "Nova提供极致简约而强大的平台，让您的创意以前所未有的速度成为现实。",
     items: [
       {
-        title: "Build faster",
+        title: "优雅设计",
         description:
-          "Create a new app in minutes with our easy-to-use platform.",
-        icon: "i-simple-icons-nuxtdotjs",
+          "简约而不简单的界面设计，为您的创意提供完美展示。",
+        icon: "i-simple-icons-apple",
       },
       {
-        title: "Deploy instantly",
-        description: "Deploy your app to the cloud with a single click.",
+        title: "闪电部署",
+        description: "一键部署应用到云端，无需复杂配置。",
         icon: "i-simple-icons-vercel",
       },
       {
-        title: "Integrate seamlessly",
-        description: "Connect your app to your favorite tools and services.",
+        title: "无缝集成",
+        description: "与您喜爱的工具和服务完美融合，提升工作效率。",
         icon: "i-simple-icons-figma",
       },
       {
-        title: "Scale effortlessly",
+        title: "卓越性能",
         description:
-          "Scale your app to millions of users without breaking a sweat.",
+          "强大的性能支持，轻松应对数百万用户访问。",
         icon: "i-simple-icons-amazonaws",
       },
     ],
   },
   faq: {
-    title: "Frequently Asked Questions",
+    title: "常见问题",
     items: [
       {
-        question: "What is Devstack?",
+        question: "什么是Nova？",
         answer:
-          "Devstack is a full-featured platform that helps you build and deploy web applications in a matter of minutes.",
+          "Nova是一个融合了设计与性能的应用开发平台，帮助您在几分钟内构建并部署专业级应用。",
       },
       {
-        question: "How do I cancel my subscription?",
+        question: "如何取消订阅？",
         answer:
-          "You can cancel your subscription at any time by logging into your account and following the instructions.",
+          "您可以随时登录账户并按照说明取消订阅。我们尊重您的选择，不会设置复杂的取消流程。",
       },
       {
-        question: "Can I change my plan later on?",
+        question: "我可以稍后更改我的方案吗？",
         answer:
-          "Yes, you can upgrade or downgrade your plan at any time. Your new plan will take effect at the end of your current billing cycle.",
+          "是的，您可以随时升级或降级您的方案。新方案将在当前计费周期结束时生效。",
       },
       {
-        question: "Do you offer discounts for non-profit organizations?",
+        question: "Nova与其他平台相比有什么优势？",
         answer:
-          "Yes, we offer a 20% discount to non-profit organizations. Please contact us for more information.",
+          "Nova专注于提供极致的用户体验和设计美感，同时保持强大的功能性和性能。我们相信简约而不简单的设计理念。",
       },
     ],
   },

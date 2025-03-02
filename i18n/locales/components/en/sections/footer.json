@@ -1,0 +1,8 @@
+{
+  "credits": "Nova © 2024. All rights reserved.",
+  "navigation": [
+    { "name": "Pricing", "href": "/pricing" },
+    { "name": "Support", "href": "/docs" },
+    { "name": "Privacy", "href": "/privacy" }
+  ]
+} 

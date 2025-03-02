@@ -1,0 +1,12 @@
+{
+  "title": "Ready to start your innovation journey?",
+  "description": "Sign up for Nova today and start creating stunning applications in minutes.",
+  "buttons": {
+    "auth": {
+      "dashboard": "Go to Dashboard"
+    },
+    "guest": {
+      "pricing": "Learn More"
+    }
+  }
+}

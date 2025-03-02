@@ -4,6 +4,8 @@ import PrismaIcon from "@/components/svg/PrismaIcon.vue";
 import NeonIcon from "@/components/svg/NeonIcon.vue";
 import NuxtAuthIcon from "@/components/svg/NuxtAuthIcon.vue";
 import NuxtUiIcon from "@/components/svg/NuxtUiIcon.vue";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const technos = [
   {
     name: "Nuxt",
@@ -35,7 +37,7 @@ const technos = [
 <template>
   <div class="mx-auto max-w-7xl px-6 lg:px-8 text-gray-500">
     <h2 class="text-center text-base font-medium leading-8 uppercase">
-      Powered by
+      {{ t('components.sections.poweredby.title') }}
     </h2>
     <div
       class="mx-auto grid mt-10 max-w-lg grid-cols-4 items-center gap-x-8 gap-y-12 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:grid-cols-5"

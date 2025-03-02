@@ -1,0 +1,8 @@
+{
+  "credits": "Nova © 2024. 保留所有权利。",
+  "navigation": [
+    { "name": "选购", "href": "/pricing" },
+    { "name": "支持", "href": "/docs" },
+    { "name": "隐私", "href": "/privacy" }
+  ]
+} 

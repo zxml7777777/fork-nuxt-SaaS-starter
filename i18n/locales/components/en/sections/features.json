@@ -1,0 +1,27 @@
+{
+  "title": "Innovative Technology",
+  "subtitle": "Redefining the App Development Experience",
+  "description": "Nova provides an extremely minimalist yet powerful platform that brings your ideas to life at unprecedented speed.",
+  "items": [
+    {
+      "title": "Elegant Design",
+      "description": "Simple yet sophisticated interface design that perfectly showcases your creativity.",
+      "icon": "i-simple-icons-apple"
+    },
+    {
+      "title": "Lightning Deployment",
+      "description": "Deploy your app to the cloud with a single click, no complex configuration required.",
+      "icon": "i-simple-icons-vercel"
+    },
+    {
+      "title": "Seamless Integration",
+      "description": "Perfectly integrates with your favorite tools and services to enhance productivity.",
+      "icon": "i-simple-icons-figma"
+    },
+    {
+      "title": "Outstanding Performance",
+      "description": "Powerful performance support that easily handles millions of user visits.",
+      "icon": "i-simple-icons-amazonaws"
+    }
+  ]
+} 
