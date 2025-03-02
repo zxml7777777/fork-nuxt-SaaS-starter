@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const sig = getHeader(event, "stripe-signature");
   const body = await readRawBody(event);
-  const webhookSecret = runtimeConfig.StripeWebhookSecret;
+  const webhookSecret = runtimeConfig.stripeWebhookSecret;
   if (!webhookSecret || !sig || !body) {
     throw createError({
       statusCode: 400,
@@ -86,7 +86,7 @@ export default defineEventHandler(async (event) => {
         },
       });
     } catch (error) {
-      console.error(error);
+      // Removed console.error for error logging
     }
   }
   return {

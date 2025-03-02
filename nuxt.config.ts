@@ -74,7 +74,8 @@ export default defineNuxtConfig({
   },
 
   plugins: [
-    '~/plugins/i18n-loader.ts'
+    '~/plugins/i18n-loader.ts',
+    '~/plugins/site-config.ts'
   ],
 
   runtimeConfig: {
@@ -100,6 +101,7 @@ export default defineNuxtConfig({
 
     public: {
       SiteUrl: process.env.NUXT_PUBLIC_SITE_URL,
+      RobotsHost: process.env.NUXT_PUBLIC_ROBOTS_HOST || 'https://yourdomain.com',
       StripePrices: {
         pro: {
           monthly: process.env.NUXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,
@@ -187,21 +189,73 @@ export default defineNuxtConfig({
 
   site: {
     url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-    name: '您的网站名称',
+    name: '您的SaaS应用名称',
+    description: '专业的SaaS解决方案，满足您的所有需求',
+    defaultLocale: 'en',
+    
+    // 优化robots.txt配置
     robots: {
-      // 默认配置
-      enabled: true,
-      // 可以添加更多自定义规则
-      disallow: [],
-      allow: ['/'],
+      enabled: true,           // 启用robots.txt生成
+      disableDevRobots: true,  // 开发环境禁止索引
+      i18n: true,              // 自动处理多语言
+      sitemap: true,           // 自动包含sitemap路径
+      host: process.env.NUXT_PUBLIC_ROBOTS_HOST || process.env.NUXT_PUBLIC_SITE_URL || 'https://yourdomain.com',
+      disallow: [
+        '/dashboard/**',       // 禁止索引仪表板页面
+        '/api/**',             // 禁止索引API路径
+        '/admin/**',           // 禁止索引管理页面
+        '/account/**'          // 禁止索引账户页面
+      ],
+      allow: [
+        '/',                   // 允许索引首页
+        '/blog/**',            // 允许索引博客页面
+        '/docs/**',            // 允许索引文档页面
+        '/pricing'             // 允许索引定价页面
+      ]
     },
+    
+    // 优化SEO配置
     i18n: {
       locales: ['en', 'zh'],
       defaultLocale: 'en',
       seo: true,
       routesNameSeparator: '___',
       strategy: 'prefix_except_default',
-      detectBrowserLanguage: false  // 同样禁用site配置中的浏览器语言检测
+      detectBrowserLanguage: false
+    },
+    
+    // 添加sitemap配置
+    sitemap: {
+      enabled: true,           // 启用sitemap生成
+      autoLastmod: true,       // 自动添加lastmod属性
+      xsl: true,               // 添加XSL样式表
+      cacheTtl: 1000 * 60 * 60 * 24, // 缓存24小时
+      host: process.env.NUXT_PUBLIC_ROBOTS_HOST || process.env.NUXT_PUBLIC_SITE_URL || 'https://yourdomain.com',
+      defaults: {
+        changefreq: 'daily',
+        priority: 0.7,
+        lastmod: new Date()
+      },
+      // 自定义URL配置
+      urls: [
+        {
+          loc: '/',
+          changefreq: 'weekly',
+          priority: 1.0
+        },
+        {
+          loc: '/pricing',
+          changefreq: 'monthly',
+          priority: 0.8
+        }
+      ],
+      // 排除特定路径
+      exclude: [
+        '/dashboard/**',
+        '/api/**',
+        '/admin/**',
+        '/account/**'
+      ]
     }
   },
 });

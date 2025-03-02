@@ -79,6 +79,15 @@ pnpm run dev
 - [Nuxt Content](https://content.nuxt.com/) – Create a powerful data layer for your application. Use Vue components in Markdown with the MDC syntax.
 - [Nuxt OG Image](https://nuxt.com/modules/og-image) – Generate OG Images with Vue templates in Nuxt.
 
+### SEO & Internationalization
+
+- [Nuxt i18n](https://i18n.nuxtjs.org/) – Internationalization for your Nuxt application
+- [Nuxt Site Config](https://nuxt.com/modules/site-config) – Unified site configuration for Nuxt with automatic sitemap.xml and robots.txt generation
+  - Automatically generates SEO-friendly robots.txt with customizable rules
+  - Creates comprehensive sitemap.xml with multi-language support
+  - Optimizes for search engines with proper metadata
+  - Handles development vs production environment differences
+
 ### Platforms
 
 - [Vercel](https://vercel.com/) – Easily preview & deploy changes with git
@@ -100,6 +109,45 @@ pnpm run dev
 ### Miscellaneous
 
 - [Vercel Analytics](https://vercel.com/analytics) – Track unique visitors, pageviews, and more in a privacy-friendly way
+
+## SEO Configuration
+
+This starter comes with pre-configured SEO settings using the `nuxt-site-config` module:
+
+### Features
+
+- **Automatic robots.txt Generation**: Customized rules for search engines
+- **Dynamic Sitemap Generation**: Complete with multi-language support
+- **Development Protection**: Prevents indexing of development environments
+- **Custom URL Priorities**: Optimized importance levels for different pages
+
+### Configuration
+
+The SEO configuration is located in `nuxt.config.ts` under the `site` property:
+
+```js
+site: {
+  url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+  name: '您的SaaS应用名称',
+  description: '专业的SaaS解决方案，满足您的所有需求',
+  
+  // robots.txt configuration
+  robots: {
+    enabled: true,
+    disableDevRobots: true,
+    i18n: true,
+    sitemap: true,
+    // ... custom rules
+  },
+  
+  // sitemap configuration
+  sitemap: {
+    enabled: true,
+    autoLastmod: true,
+    // ... custom settings
+  }
+}
+```
 
 ## Author
 
