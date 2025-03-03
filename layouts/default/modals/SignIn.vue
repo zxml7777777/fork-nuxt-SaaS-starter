@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 
 const { signIn } = useAuth();
 const { t } = useI18n();
 const route = useRoute();
+const router = useRouter();
 
 const loadingProviders = ref<Record<string, boolean>>({
   google: false,
@@ -11,25 +12,28 @@ const loadingProviders = ref<Record<string, boolean>>({
 });
 const authStore = useAuthStore();
 const toast = useToast();
-const adBlockerError = ref(false);
 
-// 简化的错误检测
-onMounted(() => {
-  if (route.query.auth_error === 'true') {
-    adBlockerError.value = true;
+// 监听路由变化，处理错误重定向
+watch(() => route.query, (query) => {
+  // 如果URL中包含error参数，说明登录失败，重定向到首页
+  if (query.error) {
+    console.log('Detected auth error in URL, redirecting to home page');
+    router.replace('/');
   }
-});
+}, { immediate: true, deep: true });
 
+// 简化登录流程
 const logInWith = async (provider: string) => {
+  // 设置加载状态
   loadingProviders.value[provider] = true;
-  adBlockerError.value = false;
   
   try {
     console.log(`Attempting to sign in with ${provider}`);
     
-    // 使用默认配置进行登录
-    await signIn(provider);
+    // 使用redirect: false选项，防止页面跳转
+    await signIn(provider, { redirect: false });
     
+    // 登录成功后关闭模态框
     setTimeout(() => {
       loadingProviders.value[provider] = false;
       authStore.toggleSignInModal();
@@ -38,9 +42,9 @@ const logInWith = async (provider: string) => {
     console.error(`Error signing in with ${provider}:`, error);
     loadingProviders.value[provider] = false;
     
+    // 简化错误处理，只显示一个通用错误
     toast.add({
-      title: '登录失败',
-      description: `使用${provider}登录时出现错误`,
+      title: t('auth.errors.general'),
       color: 'red'
     });
   }
@@ -69,16 +73,6 @@ const logInWith = async (provider: string) => {
           <h3 class="text-xl font-semibold leading-6 text-gray-900">{{ t('auth.signIn') }}</h3>
         </div>
       </div>
-      
-      <UAlert
-        v-if="adBlockerError"
-        class="mt-4"
-        color="orange"
-        variant="soft"
-        icon="i-heroicons-exclamation-triangle"
-      >
-        {{ t('auth.errors.adBlocker') }}
-      </UAlert>
       
       <div class="mt-8 sm:mt-10 pb-2">
         <UButton
@@ -111,14 +105,6 @@ const logInWith = async (provider: string) => {
           >
             {{ t('auth.signInWith', ['GitHub']) }}
           </UButton>
-        </div>
-        
-        <!-- 将警告提示移到按钮下方，增加间距 -->
-        <div class="mt-6 p-3 bg-orange-50 rounded-lg border border-orange-100">
-          <p class="text-xs text-orange-700 flex items-start">
-            <UIcon name="i-heroicons-exclamation-triangle" class="mr-2 flex-shrink-0 mt-0.5" />
-            <span>{{ t('auth.githubAdBlockerWarning') }}</span>
-          </p>
         </div>
       </div>
     </div>

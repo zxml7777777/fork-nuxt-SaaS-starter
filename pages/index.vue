@@ -28,20 +28,7 @@ onMounted(() => {
   isLanguageSwitching.value = false;
   document.documentElement.classList.remove('page-transitioning');
   
-  // 检查URL中是否有认证错误参数
-  if (route.query.auth_error === 'true' || route.query.error === 'github_auth') {
-    // 显示广告拦截器错误提示
-    toast.add({
-      title: t('auth.errors.adBlocker'),
-      color: 'orange',
-      timeout: 8000
-    });
-    
-    // 打开登录模态框
-    setTimeout(() => {
-      authStore.toggleSignInModal();
-    }, 500);
-  }
+  // 移除错误处理逻辑
 });
 
 // 定义页面过渡效果
