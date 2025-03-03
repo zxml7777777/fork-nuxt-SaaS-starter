@@ -18,35 +18,35 @@
     },
     "errorMessage": "An error occurred while processing your request.",
     "plans": {
-      "Starter": {
-        "title": "Starter",
-        "description": "For Beginners",
+      "Nova": {
+        "title": "Nova",
+        "description": "Basic Experience",
         "benefits": {
-          "0": "Up to 100 monthly posts",
-          "1": "Basic analytics and reporting",
-          "2": "Access to standard templates"
+          "0": "Clean and intuitive user interface",
+          "1": "Basic data analytics",
+          "2": "Standard template library"
         }
       },
-      "Pro": {
-        "title": "Pro",
-        "description": "Unlock Advanced Features",
+      "Nova Pro": {
+        "title": "Nova Pro",
+        "description": "Professional Creative Experience",
         "benefits": {
-          "0": "Up to 500 monthly posts",
-          "1": "Advanced analytics and reporting",
-          "2": "Access to business templates",
-          "3": "Priority customer support",
-          "4": "Exclusive webinars and training"
+          "0": "Advanced UI customization",
+          "1": "Detailed data analytics and reporting",
+          "2": "Professional template library",
+          "3": "Priority technical support",
+          "4": "Exclusive training resources"
         }
       },
-      "Business": {
-        "title": "Business",
-        "description": "For Power Users",
+      "Nova Max": {
+        "title": "Nova Max",
+        "description": "Unlimited Creative Possibilities",
         "benefits": {
-          "0": "Unlimited posts",
-          "1": "Real-time analytics and reporting",
-          "2": "Access to all templates, including custom branding",
-          "3": "24/7 business customer support",
-          "4": "Personalized onboarding and account management"
+          "0": "Completely unlimited usage",
+          "1": "Real-time data analytics",
+          "2": "Exclusive custom templates",
+          "3": "24/7 dedicated customer support",
+          "4": "Personalized onboarding"
         }
       }
     }

@@ -17,21 +17,21 @@ const toast = useToast();
 watch(() => route.query, (query) => {
   // 如果URL中包含error参数，说明登录失败，重定向到首页
   if (query.error) {
-    console.log('Detected auth error in URL, redirecting to home page');
     router.replace('/');
   }
 }, { immediate: true, deep: true });
 
-// 简化登录流程
+// 改进登录流程，添加强制选择账号的参数
 const logInWith = async (provider: string) => {
   // 设置加载状态
   loadingProviders.value[provider] = true;
   
   try {
-    console.log(`Attempting to sign in with ${provider}`);
-    
-    // 使用redirect: false选项，防止页面跳转
-    await signIn(provider, { redirect: false });
+    // 服务器端已配置账号选择参数，这里只需要简单调用
+    await signIn(provider, { 
+      redirect: false,
+      callbackUrl: window.location.origin
+    });
     
     // 登录成功后关闭模态框
     setTimeout(() => {
@@ -39,7 +39,6 @@ const logInWith = async (provider: string) => {
       authStore.toggleSignInModal();
     }, 500);
   } catch (error) {
-    console.error(`Error signing in with ${provider}:`, error);
     loadingProviders.value[provider] = false;
     
     // 简化错误处理，只显示一个通用错误

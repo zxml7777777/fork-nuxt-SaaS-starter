@@ -20,12 +20,24 @@ export default NuxtAuthHandler({
     GoogleProvider.default({
       clientId: config.GoogleClientId,
       clientSecret: config.GoogleClientSecret,
+      authorization: {
+        params: {
+          prompt: "select_account", // 强制显示账号选择界面
+          access_type: "offline"    // 获取刷新令牌
+        }
+      }
     }),
     // Added GitHub provider configuration
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     GitHubProvider.default({
       clientId: config.GitHubClientId,
       clientSecret: config.GitHubClientSecret,
+      authorization: {
+        params: {
+          // GitHub没有直接的账号选择参数，但可以尝试清除会话
+          login: ""  // 空值会提示用户重新登录
+        }
+      }
     }),
   ],
   adapter: PrismaAdapter(prisma),
@@ -94,22 +106,13 @@ export default NuxtAuthHandler({
   },
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log("[AUTH] SignIn callback called with:", { 
-        user: user, 
-        accountProvider: account?.provider,
-        accountId: account?.providerAccountId,
-        profileEmail: (profile as any)?.email
-      });
-
       // 如果没有邮箱，则拒绝登录
       if (!user.email) {
-        console.log("[AUTH] Rejecting sign in - no email provided");
         return false;
       }
 
       // 如果没有账户信息，则拒绝登录
       if (!account) {
-        console.log("[AUTH] Rejecting sign in - no account information");
         return false;
       }
 
@@ -120,19 +123,13 @@ export default NuxtAuthHandler({
           include: { accounts: true },
         });
 
-        console.log("[AUTH] Existing user found:", existingUser?.id);
-
         if (existingUser) {
           // 检查用户是否已经有当前提供商的账户
           const existingAccount = existingUser.accounts.find(
             (acc) => acc.provider === account.provider && acc.providerAccountId === account.providerAccountId
           );
 
-          console.log("[AUTH] Existing account for this provider:", existingAccount?.id);
-
           if (!existingAccount) {
-            console.log("[AUTH] Creating new account for existing user");
-            
             // 创建账户数据对象，处理可能的 null 或 undefined 值
             const accountData = {
               userId: existingUser.id,
@@ -148,15 +145,12 @@ export default NuxtAuthHandler({
               session_state: account.session_state || null,
             };
             
-            console.log("[AUTH] New account data:", accountData);
-            
             // 创建新的账户关联
             await prisma.account.create({
               data: accountData,
             });
           } else {
             // 如果账户已存在，更新账户信息
-            console.log("[AUTH] Updating existing account");
             await prisma.account.update({
               where: { id: existingAccount.id },
               data: {
@@ -180,6 +174,7 @@ export default NuxtAuthHandler({
             needsUpdate = true;
           }
 
+          // 处理用户头像
           if (!existingUser.image && user.image) {
             updateData.image = user.image;
             needsUpdate = true;
@@ -190,9 +185,14 @@ export default NuxtAuthHandler({
             updateData.image = user.image;
             needsUpdate = true;
           }
+          
+          // 如果是 GitHub 登录，总是使用 GitHub 头像
+          if (account.provider === "github" && user.image) {
+            updateData.image = user.image;
+            needsUpdate = true;
+          }
 
           if (needsUpdate) {
-            console.log("[AUTH] Updating user data:", updateData);
             await prisma.user.update({
               where: { id: existingUser.id },
               data: updateData,
@@ -202,13 +202,11 @@ export default NuxtAuthHandler({
           // 使用现有用户的 ID
           user.id = existingUser.id;
         } else {
-          console.log("[AUTH] No existing user found, will create new user");
           // 新用户将由 PrismaAdapter 自动创建
         }
 
         return true;
       } catch (error) {
-        console.error("[AUTH] Error in signIn callback:", error);
         return false;
       }
     },

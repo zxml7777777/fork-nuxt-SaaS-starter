@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     routeRules: {
       '/**': {
         headers: {
-          'Content-Security-Policy': "style-src 'self' https://m.stripe.network https://fonts.googleapis.com 'unsafe-inline'; connect-src 'self' https://collector.github.com;"
+          'Content-Security-Policy': "style-src 'self' https://m.stripe.network https://fonts.googleapis.com 'unsafe-inline'; connect-src 'self' https://collector.github.com https://github.com;"
         }
       }
     }
@@ -86,7 +86,6 @@ export default defineNuxtConfig({
     ResendApiKey: process.env.NUXT_RESEND_API_KEY,
     GitHubClientId: process.env.NUXT_GITHUB_CLIENT_ID,
     GitHubClientSecret: process.env.NUXT_GITHUB_CLIENT_SECRET,
-    AppUrl: process.env.NUXT_APP_URL,
     // Stripe 配置
     stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
@@ -103,7 +102,6 @@ export default defineNuxtConfig({
 
     public: {
       SiteUrl: process.env.NUXT_PUBLIC_SITE_URL,
-      AppUrl: process.env.NUXT_PUBLIC_APP_URL,
       RobotsHost: process.env.NUXT_PUBLIC_ROBOTS_HOST || 'https://yourdomain.com',
       StripePrices: {
         pro: {
@@ -115,7 +113,7 @@ export default defineNuxtConfig({
           yearly: process.env.NUXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PRICE_ID
         }
       },
-      stripePublishableKey: process.env.NUXT_STRIPE_PUBLISHABLE_KEY,
+      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     }
   },
 

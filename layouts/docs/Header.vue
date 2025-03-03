@@ -1,13 +1,27 @@
 <script setup lang="ts">
 import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
-import type { NavItem } from "@nuxt/content";
 import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
 
 const { data: authSession, signOut, status: authStatus } = useAuth();
 const uiStore = useUIStore();
 const siteConfig = useAppConfig().site;
+const { t } = useI18n();
 
-const navigationItems = inject<NavItem[]>("navigation", []);
+// 使用any类型避免NavItem类型错误
+const navigationItems = inject<any[]>("navigation", []);
+
+// 登出功能
+const logoutCompletely = async () => {
+  try {
+    // 登出应用并重定向到首页
+    await signOut({
+      callbackUrl: '/'
+    });
+  } catch (error) {
+    // 出错时也重定向到首页
+    window.location.href = '/';
+  }
+};
 </script>
 
 <template>
@@ -67,17 +81,13 @@ const navigationItems = inject<NavItem[]>("navigation", []);
               <div class="py-1">
                 <HeadlessMenuItem v-slot="{ active }">
                   <button
-                    @click.prevent="
-                      signOut({
-                        callbackUrl: '/',
-                      })
-                    "
+                    @click.prevent="logoutCompletely"
                     :class="[
                       active ? 'bg-gray-100 dark:bg-gray-800' : '',
                       'flex w-full px-4 py-2 text-sm text-red-900 dark:text-red-400',
                     ]"
                   >
-                    <UIcon name="i-mdi-logout" class="size-5 mr-1" /> Log Out
+                    <UIcon name="i-mdi-logout" class="size-5 mr-1" /> {{ t('dashboard.userMenu.logOut') }}
                   </button>
                 </HeadlessMenuItem>
               </div>

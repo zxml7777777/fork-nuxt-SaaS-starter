@@ -2,7 +2,7 @@
 import { useAuth } from '#imports';
 import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
 
-const { data, signOut } = useAuth();
+const { data: authSession, signOut } = useAuth();
 const { t } = useI18n();
 const localePath = useLocalePath();
 
@@ -11,6 +11,19 @@ const navigation = [
   { name: "dashboard.navigation.documentation", href: "/docs" },
 ];
 const mobileMenuOpen = ref(false);
+
+// 登出功能
+const logoutCompletely = async () => {
+  try {
+    // 登出应用并重定向到首页
+    await signOut({
+      callbackUrl: '/'
+    });
+  } catch (error) {
+    // 出错时也重定向到首页
+    window.location.href = '/';
+  }
+};
 </script>
 
 <template>
@@ -65,14 +78,14 @@ const mobileMenuOpen = ref(false);
             <span class="sr-only">Open user menu</span>
             <NuxtImg
               class="h-8 w-8 rounded-full"
-              :src="data?.user?.image"
+              :src="authSession?.user?.image"
               alt="Photo de profil"
             />
             <span class="hidden lg:flex lg:items-center">
               <span
                 class="ml-2 text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
                 aria-hidden="true"
-                >{{ data?.user?.name }}</span
+                >{{ authSession?.user?.name }}</span
               >
               <UIcon
                 name="i-heroicons-chevron-down"
@@ -95,11 +108,7 @@ const mobileMenuOpen = ref(false);
               <div class="py-1">
                 <HeadlessMenuItem v-slot="{ active }">
                   <button
-                    @click.prevent="
-                      signOut({
-                        callbackUrl: '/',
-                      })
-                    "
+                    @click.prevent="logoutCompletely"
                     :class="[
                       active ? 'bg-gray-100 dark:bg-gray-800' : '',
                       'flex w-full px-4 py-2 text-sm text-red-900 dark:text-red-400',
