@@ -51,13 +51,17 @@ if (!page.value && !isLoading.value && !isLanguageSwitching.value) {
 if (page.value?.redirect && page.value.redirect !== route.path && !isLoading.value && !isLanguageSwitching.value)
   navigateTo(page.value.redirect);
 
-const { data: surround, pending: surroundPending } = await useAsyncData(`${route.path}-surround`, () =>
-  queryContent()
+const { data: surround, pending: surroundPending } = await useAsyncData(`${route.path}-surround`, () => {
+  // 获取当前语言的路径前缀
+  const { locale } = useI18n();
+  const pathPrefix = locale.value === 'zh' ? '/zh' : '';
+  
+  return queryContent(pathPrefix)
     .where({ _extension: "md", navigation: { $ne: false } })
     .only(["title", "description", "_path"])
     .findSurround(withoutTrailingSlash(route.path))
-    .then(data => data || [])
-);
+    .then(data => data || []);
+});
 
 // 处理surround可能为null的情况
 const safetyCheckedSurround = computed(() => surround.value || []);
