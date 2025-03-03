@@ -7,6 +7,9 @@ import { useI18n } from 'vue-i18n';
 
 const { seo } = useAppConfig();
 const { t, locale } = useI18n();
+const route = useRoute();
+const authStore = useAuthStore();
+const toast = useToast();
 
 // 全局状态
 const isAppLoading = inject('isAppLoading', ref(false));
@@ -24,6 +27,21 @@ onMounted(() => {
   isAppLoading.value = false;
   isLanguageSwitching.value = false;
   document.documentElement.classList.remove('page-transitioning');
+  
+  // 检查URL中是否有认证错误参数
+  if (route.query.auth_error === 'true' || route.query.error === 'github_auth') {
+    // 显示广告拦截器错误提示
+    toast.add({
+      title: t('auth.errors.adBlocker'),
+      color: 'orange',
+      timeout: 8000
+    });
+    
+    // 打开登录模态框
+    setTimeout(() => {
+      authStore.toggleSignInModal();
+    }, 500);
+  }
 });
 
 // 定义页面过渡效果

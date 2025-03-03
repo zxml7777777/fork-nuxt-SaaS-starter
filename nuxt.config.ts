@@ -80,11 +80,12 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // The private keys which are only available within server-side
-    AuthSecret: "",
-    GoogleClientId: "",
-    GoogleClientSecret: "",
-    ResendApiKey: "",
-    
+    AuthSecret: process.env.NUXT_AUTH_SECRET,
+    GoogleClientId: process.env.NUXT_GOOGLE_CLIENT_ID,
+    GoogleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET,
+    ResendApiKey: process.env.NUXT_RESEND_API_KEY,
+    GitHubClientId: process.env.NUXT_GITHUB_CLIENT_ID,
+    GitHubClientSecret: process.env.NUXT_GITHUB_CLIENT_SECRET,
     // Stripe 配置
     stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,

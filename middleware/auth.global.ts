@@ -6,8 +6,8 @@ import {
 } from "~/routes";
 
 export default defineNuxtRouteMiddleware((to, _from) => {
-  const { status: authStatus } = useAuth();
-  const isLoggedIn = authStatus.value === "authenticated";
+  const { data: session, status } = useAuth();
+  const isLoggedIn = status.value === "authenticated";
   const isApiAuthRoute = to.path.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.some((route) =>
     route === "/" ? to.path === route : to.path.startsWith(route)
